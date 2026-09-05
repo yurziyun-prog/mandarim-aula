@@ -29,14 +29,20 @@ let alunosCarregados = [];
 let alunosFiltrados = [];
 let indiceEditorAtual = -1;
 
+let mensalidadesEditor = [];
+
 let csvPreparado = [];
 let csvAtualizacaoPreparado = [];
+
+
+/* ==================================================
+   ELEMENTOS
+================================================== */
 
 const loginScreen = document.getElementById("loginScreen");
 const appScreen = document.getElementById("appScreen");
 
 const mensagem = document.getElementById("loginMessage");
-
 const userInfo = document.getElementById("userInfo");
 
 const modeButton = document.getElementById("modeButton");
@@ -76,36 +82,95 @@ const studentActive = document.getElementById("studentActive");
 const studentAccountStatus = document.getElementById("studentAccountStatus");
 const studentUID = document.getElementById("studentUID");
 
-const studentFirstPaymentMonth = document.getElementById("studentFirstPaymentMonth");
-const studentLastPaidMonth = document.getElementById("studentLastPaidMonth");
-const studentPaidCount = document.getElementById("studentPaidCount");
-const studentPendingCount = document.getElementById("studentPendingCount");
-const studentPaymentDay = document.getElementById("studentPaymentDay");
+const studentFirstPaymentMonth =
+    document.getElementById("studentFirstPaymentMonth");
 
-const studentCurrentExercise = document.getElementById("studentCurrentExercise");
-const studentNotes = document.getElementById("studentNotes");
-const studentImportedFields = document.getElementById("studentImportedFields");
+const studentLastPaidMonth =
+    document.getElementById("studentLastPaidMonth");
 
-const csvImporter = document.getElementById("csvImporter");
-const csvPreview = document.getElementById("csvPreview");
-const csvMessage = document.getElementById("csvMessage");
+const studentPaidCount =
+    document.getElementById("studentPaidCount");
 
-const csvTotalRows = document.getElementById("csvTotalRows");
-const csvNewRows = document.getElementById("csvNewRows");
-const csvExistingRows = document.getElementById("csvExistingRows");
-const csvInvalidRows = document.getElementById("csvInvalidRows");
-const csvHeaders = document.getElementById("csvHeaders");
-const csvImportButton = document.getElementById("csvImportButton");
+const studentPendingCount =
+    document.getElementById("studentPendingCount");
 
-const csvUpdatePanel = document.getElementById("csvUpdatePanel");
-const csvUpdatePreview = document.getElementById("csvUpdatePreview");
-const csvUpdateMessage = document.getElementById("csvUpdateMessage");
+const studentPaymentDay =
+    document.getElementById("studentPaymentDay");
 
-const csvUpdateTotal = document.getElementById("csvUpdateTotal");
-const csvUpdateMatches = document.getElementById("csvUpdateMatches");
-const csvUpdateMissing = document.getElementById("csvUpdateMissing");
-const csvUpdateHeaders = document.getElementById("csvUpdateHeaders");
-const csvUpdateButton = document.getElementById("csvUpdateButton");
+const paymentPaidTotal =
+    document.getElementById("paymentPaidTotal");
+
+const paymentPendingTotal =
+    document.getElementById("paymentPendingTotal");
+
+const paymentFirstMonth =
+    document.getElementById("paymentFirstMonth");
+
+const paymentLastPaidMonth =
+    document.getElementById("paymentLastPaidMonth");
+
+const studentPaymentsList =
+    document.getElementById("studentPaymentsList");
+
+const studentCurrentExercise =
+    document.getElementById("studentCurrentExercise");
+
+const studentNotes =
+    document.getElementById("studentNotes");
+
+const studentImportedFields =
+    document.getElementById("studentImportedFields");
+
+const csvImporter =
+    document.getElementById("csvImporter");
+
+const csvPreview =
+    document.getElementById("csvPreview");
+
+const csvMessage =
+    document.getElementById("csvMessage");
+
+const csvTotalRows =
+    document.getElementById("csvTotalRows");
+
+const csvNewRows =
+    document.getElementById("csvNewRows");
+
+const csvExistingRows =
+    document.getElementById("csvExistingRows");
+
+const csvInvalidRows =
+    document.getElementById("csvInvalidRows");
+
+const csvHeaders =
+    document.getElementById("csvHeaders");
+
+const csvImportButton =
+    document.getElementById("csvImportButton");
+
+const csvUpdatePanel =
+    document.getElementById("csvUpdatePanel");
+
+const csvUpdatePreview =
+    document.getElementById("csvUpdatePreview");
+
+const csvUpdateMessage =
+    document.getElementById("csvUpdateMessage");
+
+const csvUpdateTotal =
+    document.getElementById("csvUpdateTotal");
+
+const csvUpdateMatches =
+    document.getElementById("csvUpdateMatches");
+
+const csvUpdateMissing =
+    document.getElementById("csvUpdateMissing");
+
+const csvUpdateHeaders =
+    document.getElementById("csvUpdateHeaders");
+
+const csvUpdateButton =
+    document.getElementById("csvUpdateButton");
 
 
 /* ==================================================
@@ -138,9 +203,7 @@ window.entrar = async function(event) {
 
         mensagem.textContent =
             "E-mail ou senha incorretos.";
-
     }
-
 };
 
 
@@ -156,16 +219,13 @@ window.criarConta = async function() {
     const senha =
         document.getElementById("password").value;
 
-
     if (!email || !senha) {
 
         mensagem.textContent =
             "Preencha e-mail e senha.";
 
         return;
-
     }
-
 
     if (senha.length < 6) {
 
@@ -173,13 +233,10 @@ window.criarConta = async function() {
             "A senha deve ter pelo menos 6 caracteres.";
 
         return;
-
     }
-
 
     mensagem.textContent =
         "Criando conta...";
-
 
     try {
 
@@ -190,7 +247,6 @@ window.criarConta = async function() {
                 senha
             );
 
-
         await setDoc(
             doc(
                 db,
@@ -198,7 +254,6 @@ window.criarConta = async function() {
                 credencial.user.uid
             ),
             {
-
                 email,
 
                 emailNormalizado:
@@ -218,19 +273,15 @@ window.criarConta = async function() {
 
                 criadoEm:
                     serverTimestamp()
-
             }
         );
-
 
         mensagem.textContent =
             "Conta criada com sucesso.";
 
-
     } catch (erro) {
 
         console.error(erro);
-
 
         if (
             erro.code ===
@@ -240,9 +291,7 @@ window.criarConta = async function() {
             mensagem.textContent =
                 "Este e-mail já possui uma conta.";
 
-        }
-
-        else if (
+        } else if (
             erro.code ===
             "auth/invalid-email"
         ) {
@@ -250,17 +299,12 @@ window.criarConta = async function() {
             mensagem.textContent =
                 "E-mail inválido.";
 
-        }
-
-        else {
+        } else {
 
             mensagem.textContent =
                 "Não foi possível criar a conta.";
-
         }
-
     }
-
 };
 
 
@@ -271,7 +315,6 @@ window.criarConta = async function() {
 window.sair = async function() {
 
     await signOut(auth);
-
 };
 
 
@@ -285,15 +328,12 @@ window.alternarModo = function() {
         return;
     }
 
-
     modoAtual =
         modoAtual === "aluno"
             ? "professor"
             : "aluno";
 
-
     atualizarModo();
-
 };
 
 
@@ -311,7 +351,6 @@ window.abrirSecao = function(titulo) {
     genericSection.classList.add("hidden");
     studentsSection.classList.add("hidden");
 
-
     if (
         titulo === "Alunos" &&
         modoAtual === "professor"
@@ -325,15 +364,12 @@ window.abrirSecao = function(titulo) {
         carregarAlunos();
 
         return;
-
     }
-
 
     genericSection.classList.remove("hidden");
 
     sectionTitle.textContent =
         titulo;
-
 };
 
 
@@ -346,7 +382,6 @@ window.voltarAoPainel = function() {
     sectionPlaceholder.classList.add("hidden");
 
     mostrarPainelAtual();
-
 };
 
 
@@ -360,13 +395,10 @@ window.carregarAlunos = async function() {
         return;
     }
 
-
     studentsMessage.textContent =
         "Carregando alunos...";
 
-
     studentsList.innerHTML = "";
-
 
     try {
 
@@ -388,13 +420,10 @@ window.carregarAlunos = async function() {
                     "usuarios"
                 )
             )
-
         ]);
-
 
         const usuariosPorEmail =
             new Map();
-
 
         usuariosSnap.docs.forEach(
             item => {
@@ -406,7 +435,6 @@ window.carregarAlunos = async function() {
                     normalizarEmail(
                         dados.email
                     );
-
 
                 if (
                     email &&
@@ -420,12 +448,9 @@ window.carregarAlunos = async function() {
                             ...dados
                         }
                     );
-
                 }
-
             }
         );
-
 
         alunosCarregados =
             alunosSnap.docs
@@ -450,7 +475,6 @@ window.carregarAlunos = async function() {
                         )
                 );
 
-
         /* ------------------------------------------
            VINCULAR FICHA ↔ CONTA POR E-MAIL
         ------------------------------------------ */
@@ -466,7 +490,6 @@ window.carregarAlunos = async function() {
                     aluno.email
                 );
 
-
             if (
                 !aluno.uidUsuario &&
                 email &&
@@ -476,7 +499,6 @@ window.carregarAlunos = async function() {
                 const usuario =
                     usuariosPorEmail.get(email);
 
-
                 await updateDoc(
                     doc(
                         db,
@@ -484,7 +506,6 @@ window.carregarAlunos = async function() {
                         aluno.id
                     ),
                     {
-
                         uidUsuario:
                             usuario.uid,
 
@@ -493,10 +514,8 @@ window.carregarAlunos = async function() {
 
                         atualizadoEm:
                             serverTimestamp()
-
                     }
                 );
-
 
                 await updateDoc(
                     doc(
@@ -505,7 +524,6 @@ window.carregarAlunos = async function() {
                         usuario.uid
                     ),
                     {
-
                         alunoId:
                             aluno.id,
 
@@ -515,66 +533,51 @@ window.carregarAlunos = async function() {
                                 usuario.nivelHSK ||
                                 3
                             )
-
                     }
                 );
-
 
                 aluno.uidUsuario =
                     usuario.uid;
 
                 aluno.statusConta =
                     "vinculada";
-
             }
-
         }
-
 
         alunosFiltrados =
             [...alunosCarregados];
 
-
         renderizarTabelaAlunos();
-
 
         studentsMessage.textContent =
             alunosCarregados.length
                 ? `${alunosCarregados.length} aluno${alunosCarregados.length === 1 ? "" : "s"} no banco.`
                 : "Ainda não há alunos cadastrados.";
 
-
     } catch (erro) {
 
         console.error(erro);
 
-
         studentsMessage.textContent =
             "Não foi possível carregar o banco de alunos.";
-
     }
-
 };
 
 
 /* ==================================================
-   RENDERIZAR TABELA
+   RENDERIZAR TABELA DE ALUNOS
 ================================================== */
 
 function renderizarTabelaAlunos() {
 
     studentsList.innerHTML = "";
 
-
     if (
         alunosFiltrados.length === 0
     ) {
 
         const linha =
-            document.createElement(
-                "tr"
-            );
-
+            document.createElement("tr");
 
         linha.innerHTML = `
             <td colspan="7">
@@ -582,69 +585,37 @@ function renderizarTabelaAlunos() {
             </td>
         `;
 
-
-        studentsList.appendChild(
-            linha
-        );
-
+        studentsList.appendChild(linha);
 
         return;
-
     }
-
 
     alunosFiltrados.forEach(
         aluno => {
 
             const linha =
-                document.createElement(
-                    "tr"
-                );
-
+                document.createElement("tr");
 
             const nome =
                 aluno.nome?.trim() ||
                 "Aluno sem nome";
 
-
             const email =
                 aluno.email?.trim() ||
                 "Sem e-mail";
-
 
             const vinculado =
                 Boolean(
                     aluno.uidUsuario
                 );
 
-
             const ativo =
                 aluno.ativo !== false;
 
-
-            const pagas =
-                Number(
-                    obterValorAluno(
-                        aluno,
-                        "mensalidadesPagas",
-                        [
-                            "mensalidades_pagas"
-                        ]
-                    ) || 0
+            const resumo =
+                calcularResumoMensalidadesAluno(
+                    aluno
                 );
-
-
-            const pendentes =
-                Number(
-                    obterValorAluno(
-                        aluno,
-                        "mensalidadesPendentes",
-                        [
-                            "mensalidades_pendentes"
-                        ]
-                    ) || 0
-                );
-
 
             const exercicio =
                 obterValorAluno(
@@ -656,11 +627,9 @@ function renderizarTabelaAlunos() {
                     ]
                 ) || "—";
 
-
             linha.innerHTML = `
 
                 <td>
-
                     <span class="student-table-name">
                         ${escaparHTML(nome)}
                     </span>
@@ -668,17 +637,13 @@ function renderizarTabelaAlunos() {
                     <span class="student-table-email">
                         ${escaparHTML(email)}
                     </span>
-
                 </td>
-
 
                 <td>
                     HSK ${Number(aluno.nivelHSK || 3)}
                 </td>
 
-
                 <td>
-
                     <span
                         class="student-account-badge
                         ${vinculado ? "linked" : "unlinked"}"
@@ -689,22 +654,18 @@ function renderizarTabelaAlunos() {
                                 : "Sem conta"
                         }
                     </span>
-
                 </td>
-
 
                 <td>
-                    ${pagas} pagas · ${pendentes} pendentes
+                    ${resumo.pagas} pagas ·
+                    ${resumo.pendentes} pendentes
                 </td>
-
 
                 <td class="student-table-exercise">
                     ${escaparHTML(exercicio)}
                 </td>
 
-
                 <td>
-
                     <span
                         class="student-status-badge
                         ${ativo ? "active" : "inactive"}"
@@ -715,12 +676,9 @@ function renderizarTabelaAlunos() {
                                 : "Inativo"
                         }
                     </span>
-
                 </td>
 
-
                 <td>
-
                     <div class="table-actions">
 
                         <button
@@ -732,11 +690,8 @@ function renderizarTabelaAlunos() {
                         </button>
 
                     </div>
-
                 </td>
-
             `;
-
 
             linha
                 .querySelector(
@@ -745,22 +700,17 @@ function renderizarTabelaAlunos() {
                 .addEventListener(
                     "click",
                     () => {
-
                         abrirFichaAluno(
                             aluno.id
                         );
-
                     }
                 );
-
 
             studentsList.appendChild(
                 linha
             );
-
         }
     );
-
 }
 
 
@@ -776,10 +726,8 @@ function() {
             studentSearch.value
         );
 
-
     const filtro =
         studentStatusFilter.value;
-
 
     alunosFiltrados =
         alunosCarregados.filter(
@@ -803,15 +751,12 @@ function() {
                         .join(" ")
                     );
 
-
                 const atendeBusca =
                     !busca ||
                     texto.includes(busca);
 
-
                 let atendeFiltro =
                     true;
-
 
                 if (
                     filtro === "ativos"
@@ -819,9 +764,7 @@ function() {
 
                     atendeFiltro =
                         aluno.ativo !== false;
-
                 }
-
 
                 if (
                     filtro === "inativos"
@@ -829,9 +772,7 @@ function() {
 
                     atendeFiltro =
                         aluno.ativo === false;
-
                 }
-
 
                 if (
                     filtro === "vinculados"
@@ -841,9 +782,7 @@ function() {
                         Boolean(
                             aluno.uidUsuario
                         );
-
                 }
-
 
                 if (
                     filtro === "sem_conta"
@@ -851,26 +790,21 @@ function() {
 
                     atendeFiltro =
                         !aluno.uidUsuario;
-
                 }
-
 
                 return (
                     atendeBusca &&
                     atendeFiltro
                 );
-
             }
         );
 
-
     renderizarTabelaAlunos();
-
 };
 
 
 /* ==================================================
-   ABRIR NOVA FICHA
+   NOVA FICHA
 ================================================== */
 
 window.abrirNovaFichaAluno =
@@ -879,55 +813,47 @@ function() {
     indiceEditorAtual =
         -1;
 
-
     limparFormularioAluno();
-
 
     studentId.value =
         "";
 
-
     studentEditorTitle.textContent =
         "Novo aluno";
-
 
     studentEditorPosition.textContent =
         "Novo registro";
 
-
     studentEditorId.textContent =
         "ID: será criado ao salvar";
-
 
     studentAccountStatus.value =
         "sem_conta";
 
-
     studentUID.value =
         "";
-
 
     studentHSK.value =
         "3";
 
-
     studentActive.value =
         "true";
 
+    mensalidadesEditor =
+        [];
+
+    renderizarMensalidades();
 
     studentsDatabaseView.classList.add(
         "hidden"
     );
 
-
     studentEditor.classList.remove(
         "hidden"
     );
 
-
     studentEditorMessage.textContent =
         "";
-
 };
 
 
@@ -944,16 +870,13 @@ function(alunoId) {
                 item.id === alunoId
         );
 
-
     if (!aluno) {
 
         studentsMessage.textContent =
             "Aluno não encontrado.";
 
         return;
-
     }
-
 
     indiceEditorAtual =
         alunosFiltrados.findIndex(
@@ -961,21 +884,17 @@ function(alunoId) {
                 item.id === alunoId
         );
 
-
     preencherFormularioAluno(
         aluno
     );
-
 
     studentsDatabaseView.classList.add(
         "hidden"
     );
 
-
     studentEditor.classList.remove(
         "hidden"
     );
-
 };
 
 
@@ -990,26 +909,20 @@ function preencherFormularioAluno(
     studentId.value =
         aluno.id;
 
-
     studentEditorTitle.textContent =
         aluno.nome?.trim() ||
         "Editar aluno";
 
-
     studentEditorId.textContent =
         `ID: ${aluno.id}`;
 
-
     atualizarPosicaoEditor();
-
 
     studentName.value =
         aluno.nome || "";
 
-
     studentEmail.value =
         aluno.email || "";
-
 
     studentHSK.value =
         String(
@@ -1019,12 +932,10 @@ function preencherFormularioAluno(
             )
         );
 
-
     studentActive.value =
         aluno.ativo === false
             ? "false"
             : "true";
-
 
     studentAccountStatus.value =
         aluno.uidUsuario
@@ -1034,55 +945,9 @@ function preencherFormularioAluno(
                 "sem_conta"
             );
 
-
     studentUID.value =
         aluno.uidUsuario ||
         "";
-
-
-    studentFirstPaymentMonth.value =
-        normalizarMesHTML(
-            obterValorAluno(
-                aluno,
-                "primeiroMesRegistrado",
-                [
-                    "primeiro_mes_registrado"
-                ]
-            )
-        );
-
-
-    studentLastPaidMonth.value =
-        normalizarMesHTML(
-            obterValorAluno(
-                aluno,
-                "ultimoMesPago",
-                [
-                    "ultimo_mes_pago"
-                ]
-            )
-        );
-
-
-    studentPaidCount.value =
-        obterValorAluno(
-            aluno,
-            "mensalidadesPagas",
-            [
-                "mensalidades_pagas"
-            ]
-        ) ?? 0;
-
-
-    studentPendingCount.value =
-        obterValorAluno(
-            aluno,
-            "mensalidadesPendentes",
-            [
-                "mensalidades_pendentes"
-            ]
-        ) ?? 0;
-
 
     studentPaymentDay.value =
         obterValorAluno(
@@ -1093,7 +958,6 @@ function preencherFormularioAluno(
             ]
         ) ?? "";
 
-
     studentCurrentExercise.value =
         obterValorAluno(
             aluno,
@@ -1102,7 +966,6 @@ function preencherFormularioAluno(
                 "exercicio_atual"
             ]
         ) || "";
-
 
     studentNotes.value =
         obterValorAluno(
@@ -1113,21 +976,739 @@ function preencherFormularioAluno(
             ]
         ) || "";
 
+    /* ------------------------------------------
+       HISTÓRICO DE MENSALIDADES
+    ------------------------------------------ */
+
+    mensalidadesEditor =
+        obterMensalidadesAluno(
+            aluno
+        );
+
+    renderizarMensalidades();
 
     renderizarCamposImportados(
         aluno.dadosImportados ||
         {}
     );
 
-
     studentEditorMessage.textContent =
         "";
-
 }
 
 
 /* ==================================================
-   RENDERIZAR CAMPOS IMPORTADOS
+   OBTER MENSALIDADES DO ALUNO
+================================================== */
+
+function obterMensalidadesAluno(
+    aluno
+) {
+
+    if (
+        Array.isArray(
+            aluno.mensalidades
+        ) &&
+        aluno.mensalidades.length > 0
+    ) {
+
+        return aluno.mensalidades
+            .map(
+                item => ({
+                    id:
+                        item.id ||
+                        gerarIdLocal(),
+
+                    competencia:
+                        item.competencia ||
+                        "",
+
+                    status:
+                        normalizarStatusMensalidade(
+                            item.status
+                        ),
+
+                    valor:
+                        item.valor ??
+                        "",
+
+                    dataPagamento:
+                        item.dataPagamento ||
+                        "",
+
+                    observacao:
+                        item.observacao ||
+                        ""
+                })
+            )
+            .sort(
+                ordenarMensalidades
+            );
+    }
+
+    /*
+       MIGRAÇÃO DOS REGISTROS ATUAIS
+
+       O banco inicial foi criado quando "Mensalidade Julho"
+       representava o período maio-julho de 2026.
+
+       Como você informou que agosto e setembro ainda
+       precisavam ser registrados, os registros antigos
+       sem histórico passam para:
+
+       maio     pago
+       junho    pago
+       julho    pago
+       agosto   pendente
+       setembro pendente
+
+       Isso só acontece enquanto NÃO existe um histórico
+       real salvo no aluno.
+    */
+
+    const pagasAntigas =
+        Number(
+            obterValorAluno(
+                aluno,
+                "mensalidadesPagas",
+                [
+                    "mensalidades_pagas"
+                ]
+            ) || 0
+        );
+
+    const ultimoMesAntigo =
+        obterValorAluno(
+            aluno,
+            "ultimoMesPago",
+            [
+                "ultimo_mes_pago"
+            ]
+        );
+
+    const primeiroMesAntigo =
+        obterValorAluno(
+            aluno,
+            "primeiroMesRegistrado",
+            [
+                "primeiro_mes_registrado"
+            ]
+        );
+
+    const pareceRegistroInicial =
+        pagasAntigas >= 3 ||
+        ultimoMesAntigo === "2026-07" ||
+        primeiroMesAntigo === "2026-05";
+
+    if (
+        pareceRegistroInicial
+    ) {
+
+        return [
+            criarMensalidade(
+                "2026-05",
+                "paga"
+            ),
+
+            criarMensalidade(
+                "2026-06",
+                "paga"
+            ),
+
+            criarMensalidade(
+                "2026-07",
+                "paga"
+            ),
+
+            criarMensalidade(
+                "2026-08",
+                "pendente"
+            ),
+
+            criarMensalidade(
+                "2026-09",
+                "pendente"
+            )
+        ];
+    }
+
+    return [];
+}
+
+
+/* ==================================================
+   CRIAR MENSALIDADE
+================================================== */
+
+function criarMensalidade(
+    competencia = "",
+    status = "pendente"
+) {
+
+    return {
+        id:
+            gerarIdLocal(),
+
+        competencia,
+
+        status,
+
+        valor:
+            "",
+
+        dataPagamento:
+            "",
+
+        observacao:
+            ""
+    };
+}
+
+
+/* ==================================================
+   ADICIONAR MENSALIDADE
+================================================== */
+
+window.adicionarMensalidade =
+function() {
+
+    const proximoMes =
+        descobrirProximoMes();
+
+    mensalidadesEditor.push(
+        criarMensalidade(
+            proximoMes,
+            "pendente"
+        )
+    );
+
+    mensalidadesEditor.sort(
+        ordenarMensalidades
+    );
+
+    renderizarMensalidades();
+};
+
+
+/* ==================================================
+   DESCOBRIR PRÓXIMO MÊS
+================================================== */
+
+function descobrirProximoMes() {
+
+    const competencias =
+        mensalidadesEditor
+            .map(
+                item =>
+                    item.competencia
+            )
+            .filter(
+                item =>
+                    /^\d{4}-\d{2}$/.test(
+                        item
+                    )
+            )
+            .sort();
+
+    if (
+        competencias.length === 0
+    ) {
+
+        const hoje =
+            new Date();
+
+        return (
+            hoje.getFullYear() +
+            "-" +
+            String(
+                hoje.getMonth() + 1
+            ).padStart(2, "0")
+        );
+    }
+
+    const ultimo =
+        competencias[
+            competencias.length - 1
+        ];
+
+    const [
+        ano,
+        mes
+    ] =
+        ultimo
+            .split("-")
+            .map(Number);
+
+    const data =
+        new Date(
+            ano,
+            mes,
+            1
+        );
+
+    return (
+        data.getFullYear() +
+        "-" +
+        String(
+            data.getMonth() + 1
+        ).padStart(2, "0")
+    );
+}
+
+
+/* ==================================================
+   RENDERIZAR MENSALIDADES
+================================================== */
+
+function renderizarMensalidades() {
+
+    studentPaymentsList.innerHTML =
+        "";
+
+    mensalidadesEditor.sort(
+        ordenarMensalidades
+    );
+
+    if (
+        mensalidadesEditor.length === 0
+    ) {
+
+        studentPaymentsList.innerHTML = `
+            <tr class="payment-empty-row">
+                <td colspan="6">
+                    Nenhuma mensalidade registrada.
+                </td>
+            </tr>
+        `;
+
+        atualizarResumoMensalidades();
+
+        return;
+    }
+
+    mensalidadesEditor.forEach(
+        mensalidade => {
+
+            const linha =
+                document.createElement(
+                    "tr"
+                );
+
+            linha.className =
+                mensalidade.status === "paga"
+                    ? "payment-row-paid"
+                    : "payment-row-pending";
+
+            linha.innerHTML = `
+
+                <td>
+                    <input
+                        type="month"
+                        value="${escaparAtributo(mensalidade.competencia)}"
+                        data-payment-field="competencia"
+                    >
+                </td>
+
+                <td>
+                    <select
+                        data-payment-field="status"
+                    >
+                        <option
+                            value="paga"
+                            ${
+                                mensalidade.status === "paga"
+                                    ? "selected"
+                                    : ""
+                            }
+                        >
+                            Paga
+                        </option>
+
+                        <option
+                            value="pendente"
+                            ${
+                                mensalidade.status === "pendente"
+                                    ? "selected"
+                                    : ""
+                            }
+                        >
+                            Pendente
+                        </option>
+                    </select>
+                </td>
+
+                <td>
+                    <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="0,00"
+                        value="${escaparAtributo(mensalidade.valor)}"
+                        data-payment-field="valor"
+                    >
+                </td>
+
+                <td>
+                    <input
+                        type="date"
+                        value="${escaparAtributo(mensalidade.dataPagamento)}"
+                        data-payment-field="dataPagamento"
+                    >
+                </td>
+
+                <td>
+                    <input
+                        type="text"
+                        class="payment-note-input"
+                        placeholder="Observação"
+                        value="${escaparAtributo(mensalidade.observacao)}"
+                        data-payment-field="observacao"
+                    >
+                </td>
+
+                <td>
+                    <button
+                        type="button"
+                        class="payment-remove-button"
+                    >
+                        Remover
+                    </button>
+                </td>
+            `;
+
+            linha
+                .querySelectorAll(
+                    "[data-payment-field]"
+                )
+                .forEach(
+                    campo => {
+
+                        campo.addEventListener(
+                            "change",
+                            () => {
+
+                                atualizarMensalidadeLocal(
+                                    mensalidade.id,
+                                    campo.dataset.paymentField,
+                                    campo.value
+                                );
+                            }
+                        );
+
+                        campo.addEventListener(
+                            "input",
+                            () => {
+
+                                atualizarMensalidadeLocal(
+                                    mensalidade.id,
+                                    campo.dataset.paymentField,
+                                    campo.value,
+                                    false
+                                );
+                            }
+                        );
+                    }
+                );
+
+            linha
+                .querySelector(
+                    ".payment-remove-button"
+                )
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        removerMensalidade(
+                            mensalidade.id
+                        );
+                    }
+                );
+
+            studentPaymentsList.appendChild(
+                linha
+            );
+        }
+    );
+
+    atualizarResumoMensalidades();
+}
+
+
+/* ==================================================
+   ALTERAR MENSALIDADE LOCAL
+================================================== */
+
+function atualizarMensalidadeLocal(
+    id,
+    campo,
+    valor,
+    rerenderizar = true
+) {
+
+    const mensalidade =
+        mensalidadesEditor.find(
+            item =>
+                item.id === id
+        );
+
+    if (!mensalidade) {
+        return;
+    }
+
+    if (
+        campo === "status"
+    ) {
+
+        mensalidade.status =
+            normalizarStatusMensalidade(
+                valor
+            );
+
+    } else if (
+        campo === "valor"
+    ) {
+
+        mensalidade.valor =
+            valor;
+
+    } else {
+
+        mensalidade[campo] =
+            valor;
+    }
+
+    if (
+        campo === "status" &&
+        mensalidade.status === "pendente"
+    ) {
+
+        mensalidade.dataPagamento =
+            "";
+    }
+
+    if (
+        rerenderizar &&
+        (
+            campo === "status" ||
+            campo === "competencia"
+        )
+    ) {
+
+        renderizarMensalidades();
+
+    } else {
+
+        atualizarResumoMensalidades();
+    }
+}
+
+
+/* ==================================================
+   REMOVER MENSALIDADE
+================================================== */
+
+function removerMensalidade(
+    id
+) {
+
+    mensalidadesEditor =
+        mensalidadesEditor.filter(
+            item =>
+                item.id !== id
+        );
+
+    renderizarMensalidades();
+}
+
+
+/* ==================================================
+   RESUMO DE MENSALIDADES
+================================================== */
+
+function atualizarResumoMensalidades() {
+
+    const resumo =
+        calcularResumoMensalidades(
+            mensalidadesEditor
+        );
+
+    paymentPaidTotal.textContent =
+        resumo.pagas;
+
+    paymentPendingTotal.textContent =
+        resumo.pendentes;
+
+    paymentFirstMonth.textContent =
+        resumo.primeiroMes
+            ? formatarCompetencia(
+                resumo.primeiroMes
+            )
+            : "—";
+
+    paymentLastPaidMonth.textContent =
+        resumo.ultimoMesPago
+            ? formatarCompetencia(
+                resumo.ultimoMesPago
+            )
+            : "—";
+
+    /*
+       Campos antigos continuam sincronizados
+       temporariamente para compatibilidade.
+    */
+
+    studentFirstPaymentMonth.value =
+        resumo.primeiroMes || "";
+
+    studentLastPaidMonth.value =
+        resumo.ultimoMesPago || "";
+
+    studentPaidCount.value =
+        resumo.pagas;
+
+    studentPendingCount.value =
+        resumo.pendentes;
+}
+
+
+/* ==================================================
+   CALCULAR RESUMO
+================================================== */
+
+function calcularResumoMensalidades(
+    mensalidades
+) {
+
+    const lista =
+        Array.isArray(mensalidades)
+            ? mensalidades
+            : [];
+
+    const validas =
+        lista.filter(
+            item =>
+                /^\d{4}-\d{2}$/.test(
+                    item.competencia ||
+                    ""
+                )
+        );
+
+    const pagas =
+        lista.filter(
+            item =>
+                item.status === "paga"
+        ).length;
+
+    const pendentes =
+        lista.filter(
+            item =>
+                item.status === "pendente"
+        ).length;
+
+    const competencias =
+        validas
+            .map(
+                item =>
+                    item.competencia
+            )
+            .sort();
+
+    const competenciasPagas =
+        validas
+            .filter(
+                item =>
+                    item.status === "paga"
+            )
+            .map(
+                item =>
+                    item.competencia
+            )
+            .sort();
+
+    return {
+        pagas,
+
+        pendentes,
+
+        primeiroMes:
+            competencias[0] ||
+            "",
+
+        ultimoMesPago:
+            competenciasPagas[
+                competenciasPagas.length - 1
+            ] ||
+            ""
+    };
+}
+
+
+/* ==================================================
+   RESUMO NA LISTA DE ALUNOS
+================================================== */
+
+function calcularResumoMensalidadesAluno(
+    aluno
+) {
+
+    if (
+        Array.isArray(
+            aluno.mensalidades
+        ) &&
+        aluno.mensalidades.length > 0
+    ) {
+
+        return calcularResumoMensalidades(
+            aluno.mensalidades
+        );
+    }
+
+    return {
+        pagas:
+            Number(
+                obterValorAluno(
+                    aluno,
+                    "mensalidadesPagas",
+                    [
+                        "mensalidades_pagas"
+                    ]
+                ) || 0
+            ),
+
+        pendentes:
+            Number(
+                obterValorAluno(
+                    aluno,
+                    "mensalidadesPendentes",
+                    [
+                        "mensalidades_pendentes"
+                    ]
+                ) || 0
+            ),
+
+        primeiroMes:
+            obterValorAluno(
+                aluno,
+                "primeiroMesRegistrado",
+                [
+                    "primeiro_mes_registrado"
+                ]
+            ) || "",
+
+        ultimoMesPago:
+            obterValorAluno(
+                aluno,
+                "ultimoMesPago",
+                [
+                    "ultimo_mes_pago"
+                ]
+            ) || ""
+    };
+}
+
+
+/* ==================================================
+   CAMPOS IMPORTADOS
 ================================================== */
 
 function renderizarCamposImportados(
@@ -1137,41 +1718,29 @@ function renderizarCamposImportados(
     studentImportedFields.innerHTML =
         "";
 
-
     const camposIgnorados =
         new Set([
-
             "nome",
             "email",
             "nivel hsk",
             "nivel_hsk",
             "hsk",
-
             "ativo",
-
             "primeiro mes registrado",
             "primeiro_mes_registrado",
-
             "ultimo mes pago",
             "ultimo_mes_pago",
-
             "mensalidades pagas",
             "mensalidades_pagas",
-
             "mensalidades pendentes",
             "mensalidades_pendentes",
-
             "dia pagamento referencia",
             "dia_pagamento_referencia",
-
             "exercicio atual",
             "exercicio_atual",
-
             "observacoes",
             "observações"
-
         ]);
-
 
     const entradas =
         Object.entries(
@@ -1187,7 +1756,6 @@ function renderizarCamposImportados(
                 )
         );
 
-
     if (
         entradas.length === 0
     ) {
@@ -1199,11 +1767,8 @@ function renderizarCamposImportados(
                 </p>
             `;
 
-
         return;
-
     }
-
 
     entradas.forEach(
         ([chave, valor]) => {
@@ -1213,10 +1778,8 @@ function renderizarCamposImportados(
                     "label"
                 );
 
-
             linha.className =
                 "imported-field-row";
-
 
             linha.innerHTML = `
 
@@ -1229,17 +1792,13 @@ function renderizarCamposImportados(
                     data-imported-key="${escaparAtributo(chave)}"
                     value="${escaparAtributo(valor ?? "")}"
                 >
-
             `;
-
 
             studentImportedFields.appendChild(
                 linha
             );
-
         }
     );
-
 }
 
 
@@ -1249,54 +1808,33 @@ function renderizarCamposImportados(
 
 function limparFormularioAluno() {
 
-    studentId.value =
-        "";
-
-    studentName.value =
-        "";
-
-    studentEmail.value =
-        "";
-
-    studentHSK.value =
-        "3";
-
-    studentActive.value =
-        "true";
+    studentId.value = "";
+    studentName.value = "";
+    studentEmail.value = "";
+    studentHSK.value = "3";
+    studentActive.value = "true";
 
     studentAccountStatus.value =
         "sem_conta";
 
-    studentUID.value =
-        "";
+    studentUID.value = "";
 
-    studentFirstPaymentMonth.value =
-        "";
+    studentFirstPaymentMonth.value = "";
+    studentLastPaidMonth.value = "";
+    studentPaidCount.value = "0";
+    studentPendingCount.value = "0";
+    studentPaymentDay.value = "";
 
-    studentLastPaidMonth.value =
-        "";
+    studentCurrentExercise.value = "";
+    studentNotes.value = "";
 
-    studentPaidCount.value =
-        "0";
+    studentImportedFields.innerHTML = "";
 
-    studentPendingCount.value =
-        "0";
+    mensalidadesEditor = [];
 
-    studentPaymentDay.value =
-        "";
+    renderizarMensalidades();
 
-    studentCurrentExercise.value =
-        "";
-
-    studentNotes.value =
-        "";
-
-    studentImportedFields.innerHTML =
-        "";
-
-    studentEditorMessage.textContent =
-        "";
-
+    studentEditorMessage.textContent = "";
 }
 
 
@@ -1308,7 +1846,6 @@ window.salvarFichaAluno =
 async function() {
 
     return await salvarAlunoAtual();
-
 };
 
 
@@ -1319,19 +1856,14 @@ async function() {
 async function salvarAlunoAtual() {
 
     if (!dadosUsuarioAtual?.professor) {
-
         return false;
-
     }
-
 
     const nome =
         studentName.value.trim();
 
-
     const email =
         studentEmail.value.trim();
-
 
     if (!nome) {
 
@@ -1341,21 +1873,64 @@ async function salvarAlunoAtual() {
         studentName.focus();
 
         return false;
-
     }
-
 
     const idAtual =
         studentId.value.trim();
 
-
     const dadosImportados =
         coletarCamposImportados();
 
+    const mensalidadesLimpas =
+        mensalidadesEditor
+            .filter(
+                item =>
+                    item.competencia
+            )
+            .map(
+                item => ({
+                    id:
+                        item.id,
+
+                    competencia:
+                        item.competencia,
+
+                    status:
+                        normalizarStatusMensalidade(
+                            item.status
+                        ),
+
+                    valor:
+                        item.valor === ""
+                            ? null
+                            : numeroOuNull(
+                                item.valor
+                            ),
+
+                    dataPagamento:
+                        item.status === "paga"
+                            ? (
+                                item.dataPagamento ||
+                                ""
+                            )
+                            : "",
+
+                    observacao:
+                        item.observacao ||
+                        ""
+                })
+            )
+            .sort(
+                ordenarMensalidades
+            );
+
+    const resumo =
+        calcularResumoMensalidades(
+            mensalidadesLimpas
+        );
 
     const dados =
         {
-
             nome,
 
             email,
@@ -1373,23 +1948,20 @@ async function salvarAlunoAtual() {
                 studentActive.value ===
                 "true",
 
+            mensalidades:
+                mensalidadesLimpas,
+
             primeiroMesRegistrado:
-                studentFirstPaymentMonth.value ||
-                "",
+                resumo.primeiroMes,
 
             ultimoMesPago:
-                studentLastPaidMonth.value ||
-                "",
+                resumo.ultimoMesPago,
 
             mensalidadesPagas:
-                numeroNaoNegativo(
-                    studentPaidCount.value
-                ),
+                resumo.pagas,
 
             mensalidadesPendentes:
-                numeroNaoNegativo(
-                    studentPendingCount.value
-                ),
+                resumo.pendentes,
 
             diaPagamentoReferencia:
                 studentPaymentDay.value
@@ -1408,15 +1980,12 @@ async function salvarAlunoAtual() {
 
             atualizadoEm:
                 serverTimestamp()
-
         };
-
 
     try {
 
         studentEditorMessage.textContent =
             "Salvando...";
-
 
         if (idAtual) {
 
@@ -1429,13 +1998,11 @@ async function salvarAlunoAtual() {
                 dados
             );
 
-
             const alunoLocal =
                 alunosCarregados.find(
                     item =>
                         item.id === idAtual
                 );
-
 
             if (alunoLocal) {
 
@@ -1443,9 +2010,7 @@ async function salvarAlunoAtual() {
                     alunoLocal,
                     dados
                 );
-
             }
-
 
             if (
                 alunoLocal?.uidUsuario
@@ -1458,19 +2023,23 @@ async function salvarAlunoAtual() {
                         alunoLocal.uidUsuario
                     ),
                     {
-
                         nivelHSK:
                             dados.nivelHSK
-
                     }
                 );
-
             }
 
+            mensalidadesEditor =
+                mensalidadesLimpas.map(
+                    item => ({
+                        ...item
+                    })
+                );
+
+            renderizarMensalidades();
 
             studentEditorMessage.textContent =
                 "Ficha salva. ✓";
-
 
         } else {
 
@@ -1482,11 +2051,9 @@ async function salvarAlunoAtual() {
                     )
                 );
 
-
             await setDoc(
                 novaRef,
                 {
-
                     ...dados,
 
                     uidUsuario:
@@ -1500,25 +2067,19 @@ async function salvarAlunoAtual() {
 
                     criadoEm:
                         serverTimestamp()
-
                 }
             );
-
 
             studentId.value =
                 novaRef.id;
 
-
             studentEditorId.textContent =
                 `ID: ${novaRef.id}`;
-
 
             studentEditorMessage.textContent =
                 "Novo aluno criado. ✓";
 
-
             await carregarAlunos();
-
 
             const novoIndice =
                 alunosFiltrados.findIndex(
@@ -1526,10 +2087,8 @@ async function salvarAlunoAtual() {
                         item.id === novaRef.id
                 );
 
-
             indiceEditorAtual =
                 novoIndice;
-
 
             const novoAluno =
                 alunosCarregados.find(
@@ -1537,34 +2096,25 @@ async function salvarAlunoAtual() {
                         item.id === novaRef.id
                 );
 
-
             if (novoAluno) {
 
                 preencherFormularioAluno(
                     novoAluno
                 );
-
             }
-
         }
 
-
         return true;
-
 
     } catch (erro) {
 
         console.error(erro);
 
-
         studentEditorMessage.textContent =
             "Não foi possível salvar a ficha.";
 
-
         return false;
-
     }
-
 }
 
 
@@ -1578,11 +2128,9 @@ async function() {
     const salvo =
         await salvarAlunoAtual();
 
-
     if (!salvo) {
         return;
     }
-
 
     if (
         indiceEditorAtual <= 0
@@ -1592,23 +2140,18 @@ async function() {
             "Este é o primeiro aluno da lista.";
 
         return;
-
     }
 
-
     indiceEditorAtual--;
-
 
     const aluno =
         alunosFiltrados[
             indiceEditorAtual
         ];
 
-
     preencherFormularioAluno(
         aluno
     );
-
 };
 
 
@@ -1622,11 +2165,9 @@ async function() {
     const salvo =
         await salvarAlunoAtual();
 
-
     if (!salvo) {
         return;
     }
-
 
     if (
         indiceEditorAtual < 0 ||
@@ -1638,28 +2179,23 @@ async function() {
             "Este é o último aluno da lista.";
 
         return;
-
     }
 
-
     indiceEditorAtual++;
-
 
     const aluno =
         alunosFiltrados[
             indiceEditorAtual
         ];
 
-
     preencherFormularioAluno(
         aluno
     );
-
 };
 
 
 /* ==================================================
-   ATUALIZAR POSIÇÃO
+   POSIÇÃO DO EDITOR
 ================================================== */
 
 function atualizarPosicaoEditor() {
@@ -1673,13 +2209,10 @@ function atualizarPosicaoEditor() {
             "Novo registro";
 
         return;
-
     }
-
 
     studentEditorPosition.textContent =
         `${indiceEditorAtual + 1} / ${alunosFiltrados.length}`;
-
 }
 
 
@@ -1694,14 +2227,11 @@ async function() {
         "hidden"
     );
 
-
     studentsDatabaseView.classList.remove(
         "hidden"
     );
 
-
     await carregarAlunos();
-
 };
 
 
@@ -1716,15 +2246,13 @@ function() {
         "hidden"
     );
 
-
     csvMessage.textContent =
         "";
-
 };
 
 
 /* ==================================================
-   LER CSV DE NOVOS ALUNOS
+   LER CSV
 ================================================== */
 
 window.lerCSVSelecionado =
@@ -1733,11 +2261,9 @@ function(event) {
     const arquivo =
         event.target.files?.[0];
 
-
     if (!arquivo) {
         return;
     }
-
 
     if (!window.Papa) {
 
@@ -1745,27 +2271,21 @@ function(event) {
             "O leitor de CSV não foi carregado.";
 
         return;
-
     }
-
 
     csvMessage.textContent =
         "Lendo arquivo...";
-
 
     csvPreview.classList.add(
         "hidden"
     );
 
-
     csvPreparado =
         [];
-
 
     window.Papa.parse(
         arquivo,
         {
-
             header: true,
 
             skipEmptyLines:
@@ -1788,15 +2308,11 @@ function(event) {
                         erro
                     );
 
-
                     csvMessage.textContent =
                         "Não foi possível ler o CSV.";
-
                 }
-
         }
     );
-
 };
 
 
@@ -1804,7 +2320,7 @@ function(event) {
    PRÉVIA CSV
 ================================================== */
 
-async function prepararPreviewCSV(
+function prepararPreviewCSV(
     resultado
 ) {
 
@@ -1815,11 +2331,9 @@ async function prepararPreviewCSV(
             ? resultado.data
             : [];
 
-
     const cabecalhos =
         resultado.meta?.fields ||
         [];
-
 
     const emailsExistentes =
         new Set(
@@ -1833,16 +2347,9 @@ async function prepararPreviewCSV(
                 .filter(Boolean)
         );
 
-
-    let novos =
-        0;
-
-    let existentes =
-        0;
-
-    let invalidos =
-        0;
-
+    let novos = 0;
+    let existentes = 0;
+    let invalidos = 0;
 
     csvPreparado =
         linhas.map(
@@ -1860,7 +2367,6 @@ async function prepararPreviewCSV(
                         ]
                     );
 
-
                 const email =
                     obterCampo(
                         linha,
@@ -1870,7 +2376,6 @@ async function prepararPreviewCSV(
                             "mail"
                         ]
                     );
-
 
                 const hskBruto =
                     obterCampo(
@@ -1885,24 +2390,20 @@ async function prepararPreviewCSV(
                         ]
                     );
 
-
                 const emailNormalizado =
                     normalizarEmail(
                         email
                     );
-
 
                 const nivelHSK =
                     normalizarHSK(
                         hskBruto
                     );
 
-
                 const valido =
                     Boolean(
                         nome?.trim()
                     );
-
 
                 const existente =
                     emailNormalizado
@@ -1911,30 +2412,22 @@ async function prepararPreviewCSV(
                         )
                         : false;
 
-
                 if (!valido) {
 
                     invalidos++;
 
-                }
-
-                else if (
+                } else if (
                     existente
                 ) {
 
                     existentes++;
 
-                }
-
-                else {
+                } else {
 
                     novos++;
-
                 }
 
-
                 return {
-
                     indice,
 
                     valido,
@@ -1955,49 +2448,38 @@ async function prepararPreviewCSV(
 
                     linhaOriginal:
                         linha
-
                 };
-
             }
         );
-
 
     csvTotalRows.textContent =
         `${linhas.length} linha${linhas.length === 1 ? "" : "s"}`;
 
-
     csvNewRows.textContent =
         `${novos} novo${novos === 1 ? "" : "s"}`;
-
 
     csvExistingRows.textContent =
         `${existentes} existente${existentes === 1 ? "" : "s"}`;
 
-
     csvInvalidRows.textContent =
         `${invalidos} inválido${invalidos === 1 ? "" : "s"}`;
-
 
     csvHeaders.textContent =
         cabecalhos.length
             ? `Colunas: ${cabecalhos.join(" · ")}`
             : "Nenhum cabeçalho encontrado.";
 
-
     csvImportButton.disabled =
         novos === 0;
-
 
     csvPreview.classList.remove(
         "hidden"
     );
 
-
     csvMessage.textContent =
         novos
             ? "Prévia pronta."
             : "Não há novos alunos válidos para importar.";
-
 }
 
 
@@ -2012,14 +2494,12 @@ async function() {
         return;
     }
 
-
     const novos =
         csvPreparado.filter(
             item =>
                 item.valido &&
                 !item.existente
         );
-
 
     if (
         novos.length === 0
@@ -2029,24 +2509,16 @@ async function() {
             "Não há novos alunos para importar.";
 
         return;
-
     }
-
 
     csvImportButton.disabled =
         true;
 
-
     csvImportButton.textContent =
         "Importando...";
 
-
-    let importados =
-        0;
-
-    let erros =
-        0;
-
+    let importados = 0;
+    let erros = 0;
 
     for (
         const item
@@ -2063,15 +2535,22 @@ async function() {
                     )
                 );
 
-
             const linha =
                 item.linhaOriginal;
 
+            const historicoImportado =
+                interpretarHistoricoCSV(
+                    linha
+                );
+
+            const resumo =
+                calcularResumoMensalidades(
+                    historicoImportado
+                );
 
             await setDoc(
                 ref,
                 {
-
                     nome:
                         item.nome,
 
@@ -2093,50 +2572,20 @@ async function() {
                             true
                         ),
 
+                    mensalidades:
+                        historicoImportado,
+
                     primeiroMesRegistrado:
-                        normalizarMesHTML(
-                            obterCampo(
-                                linha,
-                                [
-                                    "primeiro_mes_registrado",
-                                    "primeiro mes registrado"
-                                ]
-                            )
-                        ),
+                        resumo.primeiroMes,
 
                     ultimoMesPago:
-                        normalizarMesHTML(
-                            obterCampo(
-                                linha,
-                                [
-                                    "ultimo_mes_pago",
-                                    "último mês pago",
-                                    "ultimo mes pago"
-                                ]
-                            )
-                        ),
+                        resumo.ultimoMesPago,
 
                     mensalidadesPagas:
-                        numeroNaoNegativo(
-                            obterCampo(
-                                linha,
-                                [
-                                    "mensalidades_pagas",
-                                    "mensalidades pagas"
-                                ]
-                            )
-                        ),
+                        resumo.pagas,
 
                     mensalidadesPendentes:
-                        numeroNaoNegativo(
-                            obterCampo(
-                                linha,
-                                [
-                                    "mensalidades_pendentes",
-                                    "mensalidades pendentes"
-                                ]
-                            )
-                        ),
+                        resumo.pendentes,
 
                     diaPagamentoReferencia:
                         numeroOuNull(
@@ -2187,13 +2636,10 @@ async function() {
 
                     atualizadoEm:
                         serverTimestamp()
-
                 }
             );
 
-
             importados++;
-
 
         } catch (erro) {
 
@@ -2201,28 +2647,20 @@ async function() {
                 erro
             );
 
-
             erros++;
-
         }
-
     }
-
 
     csvImportButton.textContent =
         "Importar novos alunos";
 
-
     csvImportButton.disabled =
         false;
-
 
     csvMessage.textContent =
         `${importados} aluno${importados === 1 ? "" : "s"} importado${importados === 1 ? "" : "s"}${erros ? ` · ${erros} erro${erros === 1 ? "" : "s"}` : ""}.`;
 
-
     await carregarAlunos();
-
 };
 
 
@@ -2238,32 +2676,22 @@ function() {
             "csvFileInput"
         );
 
-
     if (input) {
-
-        input.value =
-            "";
-
+        input.value = "";
     }
 
-
-    csvPreparado =
-        [];
-
+    csvPreparado = [];
 
     csvPreview.classList.add(
         "hidden"
     );
 
-
-    csvMessage.textContent =
-        "";
-
+    csvMessage.textContent = "";
 };
 
 
 /* ==================================================
-   ABRIR ATUALIZADOR CSV
+   ATUALIZADOR CSV
 ================================================== */
 
 window.abrirAtualizadorCSV =
@@ -2273,16 +2701,10 @@ function() {
         "hidden"
     );
 
-
     csvUpdateMessage.textContent =
         "";
-
 };
 
-
-/* ==================================================
-   FECHAR ATUALIZADOR CSV
-================================================== */
 
 window.fecharAtualizadorCSV =
 function() {
@@ -2290,7 +2712,6 @@ function() {
     csvUpdatePanel.classList.add(
         "hidden"
     );
-
 };
 
 
@@ -2304,11 +2725,9 @@ function(event) {
     const arquivo =
         event.target.files?.[0];
 
-
     if (!arquivo) {
         return;
     }
-
 
     if (!window.Papa) {
 
@@ -2316,27 +2735,20 @@ function(event) {
             "O leitor de CSV não foi carregado.";
 
         return;
-
     }
-
 
     csvUpdateMessage.textContent =
         "Lendo arquivo...";
-
 
     csvUpdatePreview.classList.add(
         "hidden"
     );
 
-
-    csvAtualizacaoPreparado =
-        [];
-
+    csvAtualizacaoPreparado = [];
 
     window.Papa.parse(
         arquivo,
         {
-
             header: true,
 
             skipEmptyLines:
@@ -2359,15 +2771,11 @@ function(event) {
                         erro
                     );
 
-
                     csvUpdateMessage.textContent =
                         "Não foi possível ler o CSV.";
-
                 }
-
         }
     );
-
 };
 
 
@@ -2383,11 +2791,9 @@ function prepararPreviewAtualizacaoCSV(
         resultado.data ||
         [];
 
-
     const cabecalhos =
         resultado.meta?.fields ||
         [];
-
 
     const porId =
         new Map(
@@ -2400,13 +2806,8 @@ function prepararPreviewAtualizacaoCSV(
             )
         );
 
-
-    let encontrados =
-        0;
-
-    let ausentes =
-        0;
-
+    let encontrados = 0;
+    let ausentes = 0;
 
     csvAtualizacaoPreparado =
         linhas.map(
@@ -2422,68 +2823,48 @@ function prepararPreviewAtualizacaoCSV(
                         ]
                     ).trim();
 
-
                 const encontrado =
                     porId.has(id);
 
-
                 if (encontrado) {
-
                     encontrados++;
-
                 } else {
-
                     ausentes++;
-
                 }
 
-
                 return {
-
                     id,
-
                     encontrado,
-
                     linha
-
                 };
-
             }
         );
-
 
     csvUpdateTotal.textContent =
         `${linhas.length} linha${linhas.length === 1 ? "" : "s"}`;
 
-
     csvUpdateMatches.textContent =
         `${encontrados} encontrado${encontrados === 1 ? "" : "s"}`;
 
-
     csvUpdateMissing.textContent =
         `${ausentes} não encontrado${ausentes === 1 ? "" : "s"}`;
-
 
     csvUpdateHeaders.textContent =
         cabecalhos.length
             ? `Colunas: ${cabecalhos.join(" · ")}`
             : "";
 
-
     csvUpdateButton.disabled =
         encontrados === 0;
-
 
     csvUpdatePreview.classList.remove(
         "hidden"
     );
 
-
     csvUpdateMessage.textContent =
         encontrados
             ? "Prévia pronta."
             : "Nenhum ID do arquivo corresponde ao banco atual.";
-
 }
 
 
@@ -2498,13 +2879,11 @@ async function() {
         return;
     }
 
-
     const atualizacoes =
         csvAtualizacaoPreparado.filter(
             item =>
                 item.encontrado
         );
-
 
     if (
         atualizacoes.length === 0
@@ -2514,24 +2893,16 @@ async function() {
             "Não há registros para atualizar.";
 
         return;
-
     }
-
 
     csvUpdateButton.disabled =
         true;
 
-
     csvUpdateButton.textContent =
         "Atualizando...";
 
-
-    let sucesso =
-        0;
-
-    let erros =
-        0;
-
+    let sucesso = 0;
+    let erros = 0;
 
     for (
         const item
@@ -2547,13 +2918,11 @@ async function() {
                         item.id
                 );
 
-
             const dados =
                 dadosAlunoAPartirDeCSV(
                     item.linha,
                     alunoAtual
                 );
-
 
             await updateDoc(
                 doc(
@@ -2562,18 +2931,14 @@ async function() {
                     item.id
                 ),
                 {
-
                     ...dados,
 
                     atualizadoEm:
                         serverTimestamp()
-
                 }
             );
 
-
             sucesso++;
-
 
         } catch (erro) {
 
@@ -2581,28 +2946,20 @@ async function() {
                 erro
             );
 
-
             erros++;
-
         }
-
     }
-
 
     csvUpdateButton.disabled =
         false;
 
-
     csvUpdateButton.textContent =
         "Atualizar registros";
-
 
     csvUpdateMessage.textContent =
         `${sucesso} registro${sucesso === 1 ? "" : "s"} atualizado${sucesso === 1 ? "" : "s"}${erros ? ` · ${erros} erro${erros === 1 ? "" : "s"}` : ""}.`;
 
-
     await carregarAlunos();
-
 };
 
 
@@ -2621,13 +2978,11 @@ function dadosAlunoAPartirDeCSV(
             ["nome"]
         );
 
-
     const email =
         obterCampo(
             linha,
             ["email", "e-mail"]
         );
-
 
     const hsk =
         obterCampo(
@@ -2639,9 +2994,54 @@ function dadosAlunoAPartirDeCSV(
             ]
         );
 
+    let mensalidades =
+        Array.isArray(
+            atual?.mensalidades
+        )
+            ? atual.mensalidades
+            : [];
+
+    const historicoCSV =
+        obterCampo(
+            linha,
+            [
+                "historico_mensalidades",
+                "mensalidades_json"
+            ]
+        );
+
+    if (historicoCSV) {
+
+        try {
+
+            const parsed =
+                JSON.parse(
+                    historicoCSV
+                );
+
+            if (
+                Array.isArray(parsed)
+            ) {
+
+                mensalidades =
+                    parsed;
+            }
+
+        } catch (erro) {
+
+            console.warn(
+                "Histórico de mensalidades inválido no CSV.",
+                erro
+            );
+        }
+    }
+
+    const resumo =
+        calcularResumoMensalidades(
+            mensalidades
+        );
 
     return {
-
         nome:
             nome !== ""
                 ? nome
@@ -2692,41 +3092,19 @@ function dadosAlunoAPartirDeCSV(
                     false
                 ),
 
+        mensalidades,
+
         primeiroMesRegistrado:
-            valorCSVouAtual(
-                linha,
-                [
-                    "primeiro_mes_registrado"
-                ],
-                atual?.primeiroMesRegistrado
-            ),
+            resumo.primeiroMes,
 
         ultimoMesPago:
-            valorCSVouAtual(
-                linha,
-                [
-                    "ultimo_mes_pago"
-                ],
-                atual?.ultimoMesPago
-            ),
+            resumo.ultimoMesPago,
 
         mensalidadesPagas:
-            numeroCSVouAtual(
-                linha,
-                [
-                    "mensalidades_pagas"
-                ],
-                atual?.mensalidadesPagas
-            ),
+            resumo.pagas,
 
         mensalidadesPendentes:
-            numeroCSVouAtual(
-                linha,
-                [
-                    "mensalidades_pendentes"
-                ],
-                atual?.mensalidadesPendentes
-            ),
+            resumo.pendentes,
 
         diaPagamentoReferencia:
             numeroNullableCSVouAtual(
@@ -2758,7 +3136,6 @@ function dadosAlunoAPartirDeCSV(
 
         dadosImportados:
             {
-
                 ...(
                     atual?.dadosImportados ||
                     {}
@@ -2767,11 +3144,8 @@ function dadosAlunoAPartirDeCSV(
                 ...limparObjeto(
                     linha
                 )
-
             }
-
     };
-
 }
 
 
@@ -2787,27 +3161,17 @@ function() {
             "csvUpdateFileInput"
         );
 
-
     if (input) {
-
-        input.value =
-            "";
-
+        input.value = "";
     }
 
-
-    csvAtualizacaoPreparado =
-        [];
-
+    csvAtualizacaoPreparado = [];
 
     csvUpdatePreview.classList.add(
         "hidden"
     );
 
-
-    csvUpdateMessage.textContent =
-        "";
-
+    csvUpdateMessage.textContent = "";
 };
 
 
@@ -2826,9 +3190,7 @@ function() {
             "Não há alunos para exportar.";
 
         return;
-
     }
-
 
     if (!window.Papa) {
 
@@ -2836,84 +3198,90 @@ function() {
             "O gerador de CSV não está disponível.";
 
         return;
-
     }
-
 
     const linhas =
         alunosCarregados.map(
-            aluno => ({
+            aluno => {
 
-                id:
-                    aluno.id,
+                const resumo =
+                    calcularResumoMensalidadesAluno(
+                        aluno
+                    );
 
-                nome:
-                    aluno.nome ||
-                    "",
+                return {
+                    id:
+                        aluno.id,
 
-                email:
-                    aluno.email ||
-                    "",
+                    nome:
+                        aluno.nome ||
+                        "",
 
-                nivel_hsk:
-                    Number(
-                        aluno.nivelHSK ||
-                        3
-                    ),
+                    email:
+                        aluno.email ||
+                        "",
 
-                ativo:
-                    aluno.ativo !==
-                    false
-                        ? "sim"
-                        : "não",
-
-                status_conta:
-                    aluno.uidUsuario
-                        ? "vinculada"
-                        : (
-                            aluno.statusConta ||
-                            "sem_conta"
+                    nivel_hsk:
+                        Number(
+                            aluno.nivelHSK ||
+                            3
                         ),
 
-                uid_usuario:
-                    aluno.uidUsuario ||
-                    "",
+                    ativo:
+                        aluno.ativo !==
+                        false
+                            ? "sim"
+                            : "não",
 
-                primeiro_mes_registrado:
-                    aluno.primeiroMesRegistrado ||
-                    "",
+                    status_conta:
+                        aluno.uidUsuario
+                            ? "vinculada"
+                            : (
+                                aluno.statusConta ||
+                                "sem_conta"
+                            ),
 
-                ultimo_mes_pago:
-                    aluno.ultimoMesPago ||
-                    "",
+                    uid_usuario:
+                        aluno.uidUsuario ||
+                        "",
 
-                mensalidades_pagas:
-                    Number(
-                        aluno.mensalidadesPagas ||
-                        0
-                    ),
+                    primeiro_mes_registrado:
+                        resumo.primeiroMes ||
+                        "",
 
-                mensalidades_pendentes:
-                    Number(
-                        aluno.mensalidadesPendentes ||
-                        0
-                    ),
+                    ultimo_mes_pago:
+                        resumo.ultimoMesPago ||
+                        "",
 
-                dia_pagamento_referencia:
-                    aluno.diaPagamentoReferencia ??
-                    "",
+                    mensalidades_pagas:
+                        resumo.pagas,
 
-                exercicio_atual:
-                    aluno.exercicioAtual ||
-                    "",
+                    mensalidades_pendentes:
+                        resumo.pendentes,
 
-                observacoes:
-                    aluno.observacoes ||
-                    ""
+                    dia_pagamento_referencia:
+                        aluno.diaPagamentoReferencia ??
+                        "",
 
-            })
+                    exercicio_atual:
+                        aluno.exercicioAtual ||
+                        "",
+
+                    observacoes:
+                        aluno.observacoes ||
+                        "",
+
+                    historico_mensalidades:
+                        JSON.stringify(
+                            Array.isArray(
+                                aluno.mensalidades
+                            )
+                                ? aluno.mensalidades
+                                : []
+                        )
+                };
+            }
         );
-
 
     const csv =
         window.Papa.unparse(
@@ -2922,7 +3290,6 @@ function() {
                 delimiter: ";"
             }
         );
-
 
     const blob =
         new Blob(
@@ -2936,43 +3303,131 @@ function() {
             }
         );
 
-
     const url =
         URL.createObjectURL(
             blob
         );
-
 
     const link =
         document.createElement(
             "a"
         );
 
-
     link.href =
         url;
 
-
     link.download =
         `alunos-mandarim-${dataArquivo()}.csv`;
-
 
     document.body.appendChild(
         link
     );
 
-
     link.click();
 
-
     link.remove();
-
 
     URL.revokeObjectURL(
         url
     );
-
 };
+
+
+/* ==================================================
+   HISTÓRICO VINDO DO CSV
+================================================== */
+
+function interpretarHistoricoCSV(
+    linha
+) {
+
+    const historico =
+        obterCampo(
+            linha,
+            [
+                "historico_mensalidades",
+                "mensalidades_json"
+            ]
+        );
+
+    if (historico) {
+
+        try {
+
+            const parsed =
+                JSON.parse(
+                    historico
+                );
+
+            if (
+                Array.isArray(parsed)
+            ) {
+
+                return parsed;
+            }
+
+        } catch (erro) {
+
+            console.warn(
+                "Não foi possível interpretar o histórico.",
+                erro
+            );
+        }
+    }
+
+    /*
+       Compatibilidade com o CSV inicial.
+       Se o arquivo disser que julho estava concluído,
+       convertemos o período conhecido maio-julho.
+    */
+
+    const julho =
+        obterCampo(
+            linha,
+            [
+                "mensalidade julho",
+                "mensalidade_julho"
+            ]
+        );
+
+    if (
+        normalizarTexto(
+            julho
+        ).includes(
+            "conclu"
+        )
+    ) {
+
+        return [
+            criarMensalidade(
+                "2026-05",
+                "paga"
+            ),
+
+            criarMensalidade(
+                "2026-06",
+                "paga"
+            ),
+
+            criarMensalidade(
+                "2026-07",
+                "paga"
+            ),
+
+            criarMensalidade(
+                "2026-08",
+                "pendente"
+            ),
+
+            criarMensalidade(
+                "2026-09",
+                "pendente"
+            )
+        ];
+    }
+
+    return [];
+}
 
 
 /* ==================================================
@@ -2983,7 +3438,6 @@ function coletarCamposImportados() {
 
     const resultado =
         {};
-
 
     studentImportedFields
         .querySelectorAll(
@@ -2996,13 +3450,10 @@ function coletarCamposImportados() {
                     input.dataset.importedKey
                 ] =
                     input.value;
-
             }
         );
 
-
     return resultado;
-
 }
 
 
@@ -3016,7 +3467,6 @@ function mostrarPainelAtual() {
         "hidden"
     );
 
-
     if (
         modoAtual ===
         "professor"
@@ -3026,26 +3476,20 @@ function mostrarPainelAtual() {
             "hidden"
         );
 
-
         teacherDashboard.classList.remove(
             "hidden"
         );
 
-    }
-
-    else {
+    } else {
 
         teacherDashboard.classList.add(
             "hidden"
         );
 
-
         studentDashboard.classList.remove(
             "hidden"
         );
-
     }
-
 }
 
 
@@ -3059,7 +3503,6 @@ function atualizarModo() {
         return;
     }
 
-
     if (
         modoAtual ===
         "professor"
@@ -3068,36 +3511,27 @@ function atualizarModo() {
         moduleName.textContent =
             "Professor";
 
-
         welcomeTitle.textContent =
             "Painel do Professor";
-
 
         modeDescription.textContent =
             "Planejamento, alunos, avaliações e conteúdo.";
 
-    }
-
-    else {
+    } else {
 
         moduleName.textContent =
             "Aluno";
-
 
         welcomeTitle.textContent =
             dadosUsuarioAtual.nome
                 ? `你好，${dadosUsuarioAtual.nome}`
                 : "你好！";
 
-
         modeDescription.textContent =
             `Área do aluno · HSK ${dadosUsuarioAtual.nivelHSK || 1}`;
-
     }
 
-
     mostrarPainelAtual();
-
 }
 
 
@@ -3114,29 +3548,22 @@ onAuthStateChanged(
             dadosUsuarioAtual =
                 null;
 
-
             modoAtual =
                 "aluno";
-
 
             loginScreen.classList.remove(
                 "hidden"
             );
 
-
             appScreen.classList.add(
                 "hidden"
             );
 
-
             mensagem.textContent =
                 "";
 
-
             return;
-
         }
-
 
         try {
 
@@ -3147,32 +3574,25 @@ onAuthStateChanged(
                     usuario.uid
                 );
 
-
             const snap =
                 await getDoc(
                     referencia
                 );
-
 
             if (!snap.exists()) {
 
                 mensagem.textContent =
                     "Perfil do usuário não encontrado.";
 
-
                 await signOut(
                     auth
                 );
 
-
                 return;
-
             }
-
 
             const dados =
                 snap.data();
-
 
             if (
                 dados.status ===
@@ -3182,16 +3602,12 @@ onAuthStateChanged(
                 mensagem.textContent =
                     "Esta conta está bloqueada.";
 
-
                 await signOut(
                     auth
                 );
 
-
                 return;
-
             }
-
 
             if (
                 dados.status ===
@@ -3201,38 +3617,29 @@ onAuthStateChanged(
                 mensagem.textContent =
                     "Sua conta ainda aguarda aprovação.";
 
-
                 await signOut(
                     auth
                 );
 
-
                 return;
-
             }
-
 
             dadosUsuarioAtual =
                 dados;
 
-
             modoAtual =
                 "aluno";
-
 
             loginScreen.classList.add(
                 "hidden"
             );
 
-
             appScreen.classList.remove(
                 "hidden"
             );
 
-
             userInfo.textContent =
                 `${dados.email} · HSK ${dados.nivelHSK}`;
-
 
             if (
                 dados.professor === true
@@ -3242,29 +3649,22 @@ onAuthStateChanged(
                     "hidden"
                 );
 
-
                 moduleIndicator.classList.remove(
                     "hidden"
                 );
 
-            }
-
-            else {
+            } else {
 
                 modeButton.classList.add(
                     "hidden"
                 );
 
-
                 moduleIndicator.classList.add(
                     "hidden"
                 );
-
             }
 
-
             atualizarModo();
-
 
         } catch (erro) {
 
@@ -3272,12 +3672,9 @@ onAuthStateChanged(
                 erro
             );
 
-
             mensagem.textContent =
                 "Erro ao carregar o perfil.";
-
         }
-
     }
 );
 
@@ -3304,14 +3701,11 @@ function obterValorAluno(
         return aluno[
             campoCanonico
         ];
-
     }
-
 
     const importados =
         aluno?.dadosImportados ||
         {};
-
 
     for (
         const alias
@@ -3332,20 +3726,15 @@ function obterValorAluno(
                     )
             );
 
-
         if (chave) {
 
             return importados[
                 chave
             ];
-
         }
-
     }
 
-
     return "";
-
 }
 
 
@@ -3356,7 +3745,6 @@ function obterCampo(
 
     const mapa =
         new Map();
-
 
     Object.keys(
         linha ||
@@ -3370,10 +3758,8 @@ function obterCampo(
                 ),
                 linha[chave]
             );
-
         }
     );
-
 
     for (
         const alias
@@ -3386,7 +3772,6 @@ function obterCampo(
                     alias
                 )
             );
-
 
         if (
             valor !==
@@ -3401,14 +3786,10 @@ function obterCampo(
             return String(
                 valor
             ).trim();
-
         }
-
     }
 
-
     return "";
-
 }
 
 
@@ -3431,7 +3812,6 @@ function normalizarCabecalho(
             " "
         )
         .trim();
-
 }
 
 
@@ -3449,7 +3829,6 @@ function normalizarTexto(
             ""
         )
         .toLowerCase();
-
 }
 
 
@@ -3463,7 +3842,6 @@ function normalizarEmail(
     )
         .trim()
         .toLowerCase();
-
 }
 
 
@@ -3483,7 +3861,6 @@ function normalizarHSK(
             )
         );
 
-
     return [
         1,
         2,
@@ -3494,34 +3871,111 @@ function normalizarHSK(
     ].includes(numero)
         ? numero
         : 3;
-
 }
 
 
-function normalizarMesHTML(
+function normalizarStatusMensalidade(
     valor
 ) {
 
     const texto =
-        String(
-            valor ||
-            ""
-        ).trim();
-
+        normalizarTexto(
+            valor
+        );
 
     if (
-        /^\d{4}-\d{2}$/.test(
-            texto
+        texto === "paga" ||
+        texto === "pago" ||
+        texto === "concluida" ||
+        texto === "concluido"
+    ) {
+
+        return "paga";
+    }
+
+    return "pendente";
+}
+
+
+function ordenarMensalidades(
+    a,
+    b
+) {
+
+    return String(
+        a.competencia ||
+        ""
+    ).localeCompare(
+        String(
+            b.competencia ||
+            ""
+        )
+    );
+}
+
+
+function formatarCompetencia(
+    competencia
+) {
+
+    if (
+        !/^\d{4}-\d{2}$/.test(
+            competencia ||
+            ""
         )
     ) {
 
-        return texto;
-
+        return competencia ||
+            "—";
     }
 
+    const [
+        ano,
+        mes
+    ] =
+        competencia.split("-");
 
-    return "";
+    const nomes =
+        [
+            "janeiro",
+            "fevereiro",
+            "março",
+            "abril",
+            "maio",
+            "junho",
+            "julho",
+            "agosto",
+            "setembro",
+            "outubro",
+            "novembro",
+            "dezembro"
+        ];
 
+    return (
+        `${nomes[Number(mes) - 1]} de ${ano}`
+    );
+}
+
+
+function gerarIdLocal() {
+
+    if (
+        window.crypto &&
+        typeof window.crypto.randomUUID ===
+        "function"
+    ) {
+
+        return window.crypto.randomUUID();
+    }
+
+    return (
+        "mens_" +
+        Date.now() +
+        "_" +
+        Math.random()
+            .toString(36)
+            .slice(2, 10)
+    );
 }
 
 
@@ -3535,11 +3989,9 @@ function interpretarBooleano(
             valor
         ).trim();
 
-
     if (!texto) {
         return padrao;
     }
-
 
     if (
         [
@@ -3552,9 +4004,7 @@ function interpretarBooleano(
     ) {
 
         return true;
-
     }
-
 
     if (
         [
@@ -3567,12 +4017,9 @@ function interpretarBooleano(
     ) {
 
         return false;
-
     }
 
-
     return padrao;
-
 }
 
 
@@ -3582,9 +4029,11 @@ function numeroNaoNegativo(
 
     const numero =
         Number(
-            valor
+            String(
+                valor ?? ""
+            )
+            .replace(",", ".")
         );
-
 
     if (
         !Number.isFinite(
@@ -3593,15 +4042,12 @@ function numeroNaoNegativo(
     ) {
 
         return 0;
-
     }
-
 
     return Math.max(
         0,
         numero
     );
-
 }
 
 
@@ -3616,22 +4062,19 @@ function numeroOuNull(
     ) {
 
         return null;
-
     }
-
 
     const numero =
         Number(
-            valor
+            String(valor)
+                .replace(",", ".")
         );
-
 
     return Number.isFinite(
         numero
     )
         ? numero
         : null;
-
 }
 
 
@@ -3641,7 +4084,6 @@ function limparObjeto(
 
     const resultado =
         {};
-
 
     Object.entries(
         objeto ||
@@ -3656,7 +4098,6 @@ function limparObjeto(
                 ).trim() ||
                 "campo";
 
-
             resultado[
                 chaveLimpa
             ] =
@@ -3668,13 +4109,10 @@ function limparObjeto(
                     : String(
                         valor
                     );
-
         }
     );
 
-
     return resultado;
-
 }
 
 
@@ -3690,38 +4128,12 @@ function valorCSVouAtual(
             aliases
         );
 
-
     return valor !== ""
         ? valor
         : (
             atual ??
             ""
         );
-
-}
-
-
-function numeroCSVouAtual(
-    linha,
-    aliases,
-    atual
-) {
-
-    const valor =
-        obterCampo(
-            linha,
-            aliases
-        );
-
-
-    return valor !== ""
-        ? numeroNaoNegativo(
-            valor
-        )
-        : numeroNaoNegativo(
-            atual
-        );
-
 }
 
 
@@ -3737,7 +4149,6 @@ function numeroNullableCSVouAtual(
             aliases
         );
 
-
     return valor !== ""
         ? numeroOuNull(
             valor
@@ -3746,7 +4157,6 @@ function numeroNullableCSVouAtual(
             atual ??
             null
         );
-
 }
 
 
@@ -3760,7 +4170,6 @@ function escaparHTML(
         .replace(
             /[&<>'"]/g,
             caractere => ({
-
                 "&":
                     "&amp;",
 
@@ -3775,12 +4184,10 @@ function escaparHTML(
 
                 '"':
                     "&quot;"
-
             })[
                 caractere
             ]
         );
-
 }
 
 
@@ -3794,7 +4201,6 @@ function escaparAtributo(
             ""
         )
     );
-
 }
 
 
@@ -3803,10 +4209,8 @@ function dataArquivo() {
     const agora =
         new Date();
 
-
     const ano =
         agora.getFullYear();
-
 
     const mes =
         String(
@@ -3818,7 +4222,6 @@ function dataArquivo() {
             "0"
         );
 
-
     const dia =
         String(
             agora.getDate()
@@ -3828,7 +4231,5 @@ function dataArquivo() {
             "0"
         );
 
-
     return `${ano}-${mes}-${dia}`;
-
 }
