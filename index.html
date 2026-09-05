@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mandarim Aula</title>
-    <link rel="stylesheet" href="css/style.css?v=5">
+    <link rel="stylesheet" href="css/style.css?v=6">
 </head>
 <body>
     <div class="ink-mountain mountain-1"></div>
@@ -74,7 +74,7 @@
             <div id="teacherDashboard" class="dashboard-grid hidden">
                 <button class="dashboard-card" type="button" onclick="abrirSecao('Alunos')">
                     <span class="card-icon">👥</span><span class="card-title">Alunos</span>
-                    <span class="card-text">Contas, níveis, perfis e acompanhamento individual.</span>
+                    <span class="card-text">Perfis, contas, níveis e acompanhamento individual.</span>
                 </button>
                 <button class="dashboard-card" type="button" onclick="abrirSecao('Planejamento de aulas')">
                     <span class="card-icon">🗓️</span><span class="card-title">Planejamento de aulas</span>
@@ -112,10 +112,44 @@
                         <div>
                             <span class="placeholder-mark">生</span>
                             <h2>Alunos</h2>
-                            <p>Gerencie nível HSK e acesso dos alunos cadastrados.</p>
+                            <p>Cadastre alunos antes mesmo de criarem conta e vincule o histórico quando o login existir.</p>
                         </div>
                         <button type="button" class="refresh-button" onclick="carregarAlunos()">Atualizar lista</button>
                     </div>
+
+                    <div class="student-toolbar">
+                        <button type="button" class="toolbar-button" onclick="alternarImportadorCSV()">Importar CSV</button>
+                    </div>
+
+                    <div id="csvImporter" class="csv-importer hidden">
+                        <div class="csv-importer-heading">
+                            <div>
+                                <strong>Importar alunos por CSV</strong>
+                                <p>O sistema reconhece automaticamente colunas como nome, e-mail e HSK. Outras colunas também serão preservadas no registro importado.</p>
+                            </div>
+                        </div>
+
+                        <input id="csvFileInput" type="file" accept=".csv,text/csv" onchange="lerCSVSelecionado(event)">
+
+                        <div id="csvPreview" class="csv-preview hidden">
+                            <div class="csv-stats">
+                                <span id="csvTotalRows">0 linhas</span>
+                                <span id="csvNewRows">0 novos</span>
+                                <span id="csvExistingRows">0 existentes</span>
+                                <span id="csvInvalidRows">0 inválidos</span>
+                            </div>
+
+                            <div id="csvHeaders" class="csv-headers"></div>
+
+                            <div class="csv-actions">
+                                <button type="button" class="save-student-button" id="csvImportButton" onclick="confirmarImportacaoCSV()">Importar novos alunos</button>
+                                <button type="button" class="refresh-button" onclick="limparImportadorCSV()">Cancelar</button>
+                            </div>
+                        </div>
+
+                        <p id="csvMessage" class="section-message"></p>
+                    </div>
+
                     <p id="studentsMessage" class="section-message"></p>
                     <div id="studentsList" class="students-list"></div>
                 </div>
@@ -123,6 +157,7 @@
         </section>
     </main>
 
-    <script type="module" src="js/app.js?v=5"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script type="module" src="js/app.js?v=6"></script>
 </body>
 </html>
