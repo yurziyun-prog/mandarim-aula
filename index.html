@@ -1,163 +1,1220 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Mandarim Aula</title>
-    <link rel="stylesheet" href="css/style.css?v=6">
+
+    <link rel="stylesheet" href="css/style.css?v=7">
 </head>
+
 <body>
+
     <div class="ink-mountain mountain-1"></div>
     <div class="ink-mountain mountain-2"></div>
 
+
+    <!-- ==================================================
+         LOGIN
+    =================================================== -->
+
     <main id="loginScreen" class="login-screen">
+
         <section class="login-card">
-            <div class="seal">学</div>
-            <div class="title-area">
-                <div class="chinese-title">中文</div>
-                <h1>Mandarim Aula</h1>
-                <p>学习 · 练习 · 进步</p>
+
+            <div class="seal">
+                学
             </div>
-            <div class="divider"><span>◆</span></div>
-            <form class="login-form" onsubmit="entrar(event)">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" placeholder="seu@email.com" required>
-                <label for="password">Senha</label>
-                <input type="password" id="password" placeholder="Sua senha" required>
-                <button type="submit" class="primary-button">Entrar</button>
-                <button type="button" class="secondary-button" onclick="criarConta()">Criar conta</button>
+
+            <div class="title-area">
+
+                <div class="chinese-title">
+                    中文
+                </div>
+
+                <h1>
+                    Mandarim Aula
+                </h1>
+
+                <p>
+                    学习 · 练习 · 进步
+                </p>
+
+            </div>
+
+
+            <div class="divider">
+                <span>◆</span>
+            </div>
+
+
+            <form
+                class="login-form"
+                onsubmit="entrar(event)"
+            >
+
+                <label for="email">
+                    E-mail
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="seu@email.com"
+                    required
+                >
+
+
+                <label for="password">
+                    Senha
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Sua senha"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Entrar
+                </button>
+
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="criarConta()"
+                >
+                    Criar conta
+                </button>
+
             </form>
-            <p class="login-message" id="loginMessage"></p>
-            <footer>汉语学习平台</footer>
+
+
+            <p
+                class="login-message"
+                id="loginMessage"
+            ></p>
+
+
+            <footer>
+                汉语学习平台
+            </footer>
+
         </section>
+
     </main>
 
-    <main id="appScreen" class="app-screen hidden">
+
+    <!-- ==================================================
+         APLICATIVO
+    =================================================== -->
+
+    <main
+        id="appScreen"
+        class="app-screen hidden"
+    >
+
+        <!-- ==================================================
+             CABEÇALHO
+        =================================================== -->
+
         <header class="app-header">
+
             <div class="app-brand">
-                <strong>中文 · Mandarim Aula</strong>
+
+                <strong>
+                    中文 · Mandarim Aula
+                </strong>
+
                 <div id="userInfo"></div>
+
             </div>
+
+
             <div class="header-actions">
-                <div id="moduleIndicator" class="module-indicator hidden">
-                    <span>Módulo:</span>
-                    <strong id="moduleName">Aluno</strong>
+
+                <div
+                    id="moduleIndicator"
+                    class="module-indicator hidden"
+                >
+
+                    <span>
+                        Módulo:
+                    </span>
+
+                    <strong id="moduleName">
+                        Aluno
+                    </strong>
+
                 </div>
-                <button id="modeButton" class="mode-button hidden" onclick="alternarModo()">Trocar módulo</button>
-                <button class="logout-button" onclick="sair()">Sair</button>
+
+
+                <button
+                    id="modeButton"
+                    class="mode-button hidden"
+                    onclick="alternarModo()"
+                >
+                    Trocar módulo
+                </button>
+
+
+                <button
+                    class="logout-button"
+                    onclick="sair()"
+                >
+                    Sair
+                </button>
+
             </div>
+
         </header>
 
+
+        <!-- ==================================================
+             ÁREA CENTRAL
+        =================================================== -->
+
         <section class="dashboard">
-            <h1 id="welcomeTitle">Bem-vindo</h1>
-            <p id="modeDescription">Área do aluno</p>
 
-            <div id="studentDashboard" class="dashboard-grid">
-                <button class="dashboard-card" type="button" onclick="abrirSecao('Aula da semana')">
-                    <span class="card-icon">🗂️</span><span class="card-title">Aula da semana</span>
-                    <span class="card-text">Conteúdo atual, tarefas e avisos da semana.</span>
+            <h1 id="welcomeTitle">
+                Bem-vindo
+            </h1>
+
+            <p id="modeDescription">
+                Área do aluno
+            </p>
+
+
+            <!-- ==================================================
+                 PAINEL DO ALUNO
+            =================================================== -->
+
+            <div
+                id="studentDashboard"
+                class="dashboard-grid"
+            >
+
+                <button
+                    type="button"
+                    class="dashboard-card"
+                    onclick="abrirSecao('Aula da semana')"
+                >
+
+                    <div class="card-icon">
+                        🗂️
+                    </div>
+
+                    <h3>
+                        Aula da semana
+                    </h3>
+
+                    <p>
+                        Conteúdo atual e atividades.
+                    </p>
+
                 </button>
-                <button class="dashboard-card" type="button" onclick="abrirSecao('Flashcards')">
-                    <span class="card-icon">🃏</span><span class="card-title">Flashcards</span>
-                    <span class="card-text">Vocabulário da semana e revisões anteriores.</span>
+
+
+                <button
+                    type="button"
+                    class="dashboard-card"
+                    onclick="abrirSecao('Flashcards')"
+                >
+
+                    <div class="card-icon">
+                        🃏
+                    </div>
+
+                    <h3>
+                        Flashcards
+                    </h3>
+
+                    <p>
+                        Vocabulário e revisão.
+                    </p>
+
                 </button>
-                <button class="dashboard-card" type="button" onclick="abrirSecao('Leitura')">
-                    <span class="card-icon">📖</span><span class="card-title">Leitura</span>
-                    <span class="card-text">Leitura da semana e atividades de compreensão.</span>
+
+
+                <button
+                    type="button"
+                    class="dashboard-card"
+                    onclick="abrirSecao('Leitura')"
+                >
+
+                    <div class="card-icon">
+                        📖
+                    </div>
+
+                    <h3>
+                        Leitura
+                    </h3>
+
+                    <p>
+                        Leitura da semana.
+                    </p>
+
                 </button>
-                <button class="dashboard-card" type="button" onclick="abrirSecao('Meu progresso')">
-                    <span class="card-icon">📊</span><span class="card-title">Meu progresso</span>
-                    <span class="card-text">Desempenho, frequência e evolução no mandarim.</span>
+
+
+                <button
+                    type="button"
+                    class="dashboard-card"
+                    onclick="abrirSecao('Meu progresso')"
+                >
+
+                    <div class="card-icon">
+                        📊
+                    </div>
+
+                    <h3>
+                        Meu progresso
+                    </h3>
+
+                    <p>
+                        Desempenho e frequência.
+                    </p>
+
                 </button>
+
             </div>
 
-            <div id="teacherDashboard" class="dashboard-grid hidden">
-                <button class="dashboard-card" type="button" onclick="abrirSecao('Alunos')">
-                    <span class="card-icon">👥</span><span class="card-title">Alunos</span>
-                    <span class="card-text">Perfis, contas, níveis e acompanhamento individual.</span>
+
+            <!-- ==================================================
+                 PAINEL DO PROFESSOR
+            =================================================== -->
+
+            <div
+                id="teacherDashboard"
+                class="dashboard-grid hidden"
+            >
+
+                <button
+                    type="button"
+                    class="dashboard-card"
+                    onclick="abrirSecao('Alunos')"
+                >
+
+                    <div class="card-icon">
+                        👥
+                    </div>
+
+                    <h3>
+                        Alunos
+                    </h3>
+
+                    <p>
+                        Cadastro, fichas e dados dos alunos.
+                    </p>
+
                 </button>
-                <button class="dashboard-card" type="button" onclick="abrirSecao('Planejamento de aulas')">
-                    <span class="card-icon">🗓️</span><span class="card-title">Planejamento de aulas</span>
-                    <span class="card-text">Organize aulas, conteúdos e tarefas semanais.</span>
+
+
+                <button
+                    type="button"
+                    class="dashboard-card"
+                    onclick="abrirSecao('Planejamento de aulas')"
+                >
+
+                    <div class="card-icon">
+                        🗓️
+                    </div>
+
+                    <h3>
+                        Planejamento de aulas
+                    </h3>
+
+                    <p>
+                        Organize aulas, conteúdos e atividades.
+                    </p>
+
                 </button>
-                <button class="dashboard-card" type="button" onclick="abrirSecao('Banco de conteúdo')">
-                    <span class="card-icon">🗃️</span><span class="card-title">Banco de conteúdo</span>
-                    <span class="card-text">Vocabulário, frases, flashcards, áudio e imagens.</span>
+
+
+                <button
+                    type="button"
+                    class="dashboard-card"
+                    onclick="abrirSecao('Banco de conteúdo')"
+                >
+
+                    <div class="card-icon">
+                        🃏
+                    </div>
+
+                    <h3>
+                        Banco de conteúdo
+                    </h3>
+
+                    <p>
+                        Flashcards, frases, leituras e materiais.
+                    </p>
+
                 </button>
-                <button class="dashboard-card" type="button" onclick="abrirSecao('Avaliações')">
-                    <span class="card-icon">📝</span><span class="card-title">Avaliações</span>
-                    <span class="card-text">Registre avaliações e acompanhe capacidades em mandarim.</span>
+
+
+                <button
+                    type="button"
+                    class="dashboard-card"
+                    onclick="abrirSecao('Avaliações')"
+                >
+
+                    <div class="card-icon">
+                        📝
+                    </div>
+
+                    <h3>
+                        Avaliações
+                    </h3>
+
+                    <p>
+                        Notas, capacidades e evolução.
+                    </p>
+
                 </button>
-                <button class="dashboard-card" type="button" onclick="abrirSecao('Frequência e desempenho')">
-                    <span class="card-icon">📈</span><span class="card-title">Frequência e desempenho</span>
-                    <span class="card-text">Faltas, resultados e evolução dos alunos.</span>
+
+
+                <button
+                    type="button"
+                    class="dashboard-card"
+                    onclick="abrirSecao('Frequência e desempenho')"
+                >
+
+                    <div class="card-icon">
+                        📊
+                    </div>
+
+                    <h3>
+                        Frequência e desempenho
+                    </h3>
+
+                    <p>
+                        Presenças, faltas e resultados.
+                    </p>
+
                 </button>
-                <button class="dashboard-card" type="button" onclick="abrirSecao('Exercícios recebidos')">
-                    <span class="card-icon">📥</span><span class="card-title">Exercícios recebidos</span>
-                    <span class="card-text">Áudios, textos e outros exercícios enviados pelos alunos.</span>
+
+
+                <button
+                    type="button"
+                    class="dashboard-card"
+                    onclick="abrirSecao('Exercícios recebidos')"
+                >
+
+                    <div class="card-icon">
+                        📥
+                    </div>
+
+                    <h3>
+                        Exercícios recebidos
+                    </h3>
+
+                    <p>
+                        Arquivos enviados pelos alunos.
+                    </p>
+
                 </button>
+
             </div>
 
-            <section id="sectionPlaceholder" class="section-placeholder hidden">
-                <button type="button" class="back-button" onclick="voltarAoPainel()">← Voltar ao painel</button>
 
-                <div id="genericSection" class="placeholder-paper">
-                    <span class="placeholder-mark">文</span>
-                    <h2 id="sectionTitle">Seção</h2>
-                    <p>Esta área já está ligada à navegação. Vamos construir suas funções nas próximas etapas.</p>
+            <!-- ==================================================
+                 ÁREA DAS SEÇÕES
+            =================================================== -->
+
+            <div
+                id="sectionPlaceholder"
+                class="section-page hidden"
+            >
+
+                <div class="section-topbar">
+
+                    <button
+                        type="button"
+                        class="back-button"
+                        onclick="voltarAoPainel()"
+                    >
+                        ← Voltar
+                    </button>
+
                 </div>
 
-                <div id="studentsSection" class="management-paper hidden">
-                    <div class="section-heading">
+
+                <!-- ==================================================
+                     SEÇÃO GENÉRICA
+                =================================================== -->
+
+                <section
+                    id="genericSection"
+                    class="hidden"
+                >
+
+                    <h2 id="sectionTitle">
+                        Seção
+                    </h2>
+
+                    <p class="section-description">
+                        Esta área será desenvolvida nas próximas etapas.
+                    </p>
+
+                </section>
+
+
+                <!-- ==================================================
+                     BANCO DE ALUNOS
+                =================================================== -->
+
+                <section
+                    id="studentsSection"
+                    class="hidden"
+                >
+
+                    <div class="database-header">
+
                         <div>
-                            <span class="placeholder-mark">生</span>
-                            <h2>Alunos</h2>
-                            <p>Cadastre alunos antes mesmo de criarem conta e vincule o histórico quando o login existir.</p>
+
+                            <h2>
+                                👥 Banco de Alunos
+                            </h2>
+
+                            <p>
+                                Cadastros pedagógicos e administrativos.
+                            </p>
+
                         </div>
-                        <button type="button" class="refresh-button" onclick="carregarAlunos()">Atualizar lista</button>
+
                     </div>
 
-                    <div class="student-toolbar">
-                        <button type="button" class="toolbar-button" onclick="alternarImportadorCSV()">Importar CSV</button>
+
+                    <!-- ==================================================
+                         BARRA DE FERRAMENTAS
+                    =================================================== -->
+
+                    <div class="database-toolbar">
+
+                        <button
+                            type="button"
+                            class="database-primary-button"
+                            onclick="abrirNovaFichaAluno()"
+                        >
+                            ➕ Novo aluno
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="database-button"
+                            onclick="alternarImportadorCSV()"
+                        >
+                            📥 Importar CSV
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="database-button"
+                            onclick="abrirAtualizadorCSV()"
+                        >
+                            🔄 Atualizar CSV
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="database-button"
+                            onclick="exportarAlunosCSV()"
+                        >
+                            📤 Exportar CSV
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="database-button"
+                            onclick="carregarAlunos()"
+                        >
+                            ↻ Atualizar lista
+                        </button>
+
                     </div>
 
-                    <div id="csvImporter" class="csv-importer hidden">
-                        <div class="csv-importer-heading">
+
+                    <!-- ==================================================
+                         BUSCA
+                    =================================================== -->
+
+                    <div class="database-search-row">
+
+                        <input
+                            type="search"
+                            id="studentSearch"
+                            placeholder="Buscar por nome, e-mail ou HSK..."
+                            oninput="filtrarListaAlunos()"
+                        >
+
+                        <select
+                            id="studentStatusFilter"
+                            onchange="filtrarListaAlunos()"
+                        >
+
+                            <option value="">
+                                Todos
+                            </option>
+
+                            <option value="ativos">
+                                Ativos
+                            </option>
+
+                            <option value="inativos">
+                                Inativos
+                            </option>
+
+                            <option value="vinculados">
+                                Com conta
+                            </option>
+
+                            <option value="sem_conta">
+                                Sem conta
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- ==================================================
+                         IMPORTAR CSV
+                    =================================================== -->
+
+                    <section
+                        id="csvImporter"
+                        class="csv-panel hidden"
+                    >
+
+                        <div class="csv-panel-header">
+
                             <div>
-                                <strong>Importar alunos por CSV</strong>
-                                <p>O sistema reconhece automaticamente colunas como nome, e-mail e HSK. Outras colunas também serão preservadas no registro importado.</p>
+
+                                <h3>
+                                    Importar novos alunos
+                                </h3>
+
+                                <p>
+                                    Adiciona apenas registros que ainda não existem.
+                                </p>
+
                             </div>
+
+                            <button
+                                type="button"
+                                class="small-close-button"
+                                onclick="alternarImportadorCSV()"
+                            >
+                                ✕
+                            </button>
+
                         </div>
 
-                        <input id="csvFileInput" type="file" accept=".csv,text/csv" onchange="lerCSVSelecionado(event)">
 
-                        <div id="csvPreview" class="csv-preview hidden">
-                            <div class="csv-stats">
-                                <span id="csvTotalRows">0 linhas</span>
-                                <span id="csvNewRows">0 novos</span>
-                                <span id="csvExistingRows">0 existentes</span>
-                                <span id="csvInvalidRows">0 inválidos</span>
+                        <input
+                            type="file"
+                            id="csvFileInput"
+                            accept=".csv,text/csv"
+                            onchange="lerCSVSelecionado(event)"
+                        >
+
+
+                        <div
+                            id="csvPreview"
+                            class="csv-preview hidden"
+                        >
+
+                            <div class="csv-summary">
+
+                                <span id="csvTotalRows">
+                                    0 linhas
+                                </span>
+
+                                <span id="csvNewRows">
+                                    0 novos
+                                </span>
+
+                                <span id="csvExistingRows">
+                                    0 existentes
+                                </span>
+
+                                <span id="csvInvalidRows">
+                                    0 inválidos
+                                </span>
+
                             </div>
 
-                            <div id="csvHeaders" class="csv-headers"></div>
+
+                            <p
+                                id="csvHeaders"
+                                class="csv-headers"
+                            ></p>
+
 
                             <div class="csv-actions">
-                                <button type="button" class="save-student-button" id="csvImportButton" onclick="confirmarImportacaoCSV()">Importar novos alunos</button>
-                                <button type="button" class="refresh-button" onclick="limparImportadorCSV()">Cancelar</button>
+
+                                <button
+                                    type="button"
+                                    id="csvImportButton"
+                                    class="database-primary-button"
+                                    onclick="confirmarImportacaoCSV()"
+                                >
+                                    Importar novos alunos
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="database-button"
+                                    onclick="limparImportadorCSV()"
+                                >
+                                    Limpar
+                                </button>
+
                             </div>
+
                         </div>
 
-                        <p id="csvMessage" class="section-message"></p>
-                    </div>
 
-                    <p id="studentsMessage" class="section-message"></p>
-                    <div id="studentsList" class="students-list"></div>
-                </div>
-            </section>
+                        <p
+                            id="csvMessage"
+                            class="database-message"
+                        ></p>
+
+                    </section>
+
+
+                    <!-- ==================================================
+                         ATUALIZAR POR CSV
+                    =================================================== -->
+
+                    <section
+                        id="csvUpdatePanel"
+                        class="csv-panel hidden"
+                    >
+
+                        <div class="csv-panel-header">
+
+                            <div>
+
+                                <h3>
+                                    Atualizar alunos por CSV
+                                </h3>
+
+                                <p>
+                                    Atualiza registros existentes usando o ID do aluno.
+                                </p>
+
+                            </div>
+
+                            <button
+                                type="button"
+                                class="small-close-button"
+                                onclick="fecharAtualizadorCSV()"
+                            >
+                                ✕
+                            </button>
+
+                        </div>
+
+
+                        <input
+                            type="file"
+                            id="csvUpdateFileInput"
+                            accept=".csv,text/csv"
+                            onchange="lerCSVAtualizacao(event)"
+                        >
+
+
+                        <div
+                            id="csvUpdatePreview"
+                            class="csv-preview hidden"
+                        >
+
+                            <div class="csv-summary">
+
+                                <span id="csvUpdateTotal">
+                                    0 linhas
+                                </span>
+
+                                <span id="csvUpdateMatches">
+                                    0 encontrados
+                                </span>
+
+                                <span id="csvUpdateMissing">
+                                    0 não encontrados
+                                </span>
+
+                            </div>
+
+
+                            <p
+                                id="csvUpdateHeaders"
+                                class="csv-headers"
+                            ></p>
+
+
+                            <div class="csv-actions">
+
+                                <button
+                                    type="button"
+                                    id="csvUpdateButton"
+                                    class="database-primary-button"
+                                    onclick="confirmarAtualizacaoCSV()"
+                                >
+                                    Atualizar registros
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="database-button"
+                                    onclick="limparAtualizadorCSV()"
+                                >
+                                    Limpar
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <p
+                            id="csvUpdateMessage"
+                            class="database-message"
+                        ></p>
+
+                    </section>
+
+
+                    <!-- ==================================================
+                         MENSAGEM DO BANCO
+                    =================================================== -->
+
+                    <p
+                        id="studentsMessage"
+                        class="database-message"
+                    >
+                        Carregando...
+                    </p>
+
+
+                    <!-- ==================================================
+                         LISTA DE ALUNOS
+                    =================================================== -->
+
+                    <div
+                        id="studentsList"
+                        class="students-list"
+                    ></div>
+
+
+                    <!-- ==================================================
+                         FICHA DO ALUNO
+                    =================================================== -->
+
+                    <section
+                        id="studentEditor"
+                        class="student-editor hidden"
+                    >
+
+                        <div class="student-editor-header">
+
+                            <div>
+
+                                <span class="editor-eyebrow">
+                                    Ficha do aluno
+                                </span>
+
+                                <h3 id="studentEditorTitle">
+                                    Novo aluno
+                                </h3>
+
+                                <p id="studentEditorId">
+                                    ID: novo registro
+                                </p>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="small-close-button"
+                                onclick="fecharFichaAluno()"
+                            >
+                                ✕
+                            </button>
+
+                        </div>
+
+
+                        <input
+                            type="hidden"
+                            id="studentId"
+                        >
+
+
+                        <!-- DADOS PRINCIPAIS -->
+
+                        <div class="student-form-section">
+
+                            <h4>
+                                Dados principais
+                            </h4>
+
+
+                            <div class="student-form-grid">
+
+                                <label>
+
+                                    <span>
+                                        Nome
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="studentName"
+                                    >
+
+                                </label>
+
+
+                                <label>
+
+                                    <span>
+                                        E-mail
+                                    </span>
+
+                                    <input
+                                        type="email"
+                                        id="studentEmail"
+                                    >
+
+                                </label>
+
+
+                                <label>
+
+                                    <span>
+                                        Nível HSK
+                                    </span>
+
+                                    <select id="studentHSK">
+
+                                        <option value="1">
+                                            HSK 1
+                                        </option>
+
+                                        <option value="2">
+                                            HSK 2
+                                        </option>
+
+                                        <option value="3">
+                                            HSK 3
+                                        </option>
+
+                                        <option value="4">
+                                            HSK 4
+                                        </option>
+
+                                        <option value="5">
+                                            HSK 5
+                                        </option>
+
+                                        <option value="6">
+                                            HSK 6
+                                        </option>
+
+                                    </select>
+
+                                </label>
+
+
+                                <label>
+
+                                    <span>
+                                        Situação
+                                    </span>
+
+                                    <select id="studentActive">
+
+                                        <option value="true">
+                                            Ativo
+                                        </option>
+
+                                        <option value="false">
+                                            Inativo
+                                        </option>
+
+                                    </select>
+
+                                </label>
+
+
+                                <label>
+
+                                    <span>
+                                        Conta
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="studentAccountStatus"
+                                        readonly
+                                    >
+
+                                </label>
+
+
+                                <label>
+
+                                    <span>
+                                        UID da conta
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="studentUID"
+                                        readonly
+                                    >
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- MENSALIDADES -->
+
+                        <div class="student-form-section">
+
+                            <h4>
+                                Mensalidades
+                            </h4>
+
+
+                            <div class="student-form-grid">
+
+                                <label>
+
+                                    <span>
+                                        Primeiro mês registrado
+                                    </span>
+
+                                    <input
+                                        type="month"
+                                        id="studentFirstPaymentMonth"
+                                    >
+
+                                </label>
+
+
+                                <label>
+
+                                    <span>
+                                        Último mês pago
+                                    </span>
+
+                                    <input
+                                        type="month"
+                                        id="studentLastPaidMonth"
+                                    >
+
+                                </label>
+
+
+                                <label>
+
+                                    <span>
+                                        Mensalidades pagas
+                                    </span>
+
+                                    <input
+                                        type="number"
+                                        id="studentPaidCount"
+                                        min="0"
+                                    >
+
+                                </label>
+
+
+                                <label>
+
+                                    <span>
+                                        Mensalidades pendentes
+                                    </span>
+
+                                    <input
+                                        type="number"
+                                        id="studentPendingCount"
+                                        min="0"
+                                    >
+
+                                </label>
+
+
+                                <label>
+
+                                    <span>
+                                        Dia de pagamento
+                                    </span>
+
+                                    <input
+                                        type="number"
+                                        id="studentPaymentDay"
+                                        min="1"
+                                        max="31"
+                                    >
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ESTUDO -->
+
+                        <div class="student-form-section">
+
+                            <h4>
+                                Estudos
+                            </h4>
+
+
+                            <label class="full-form-field">
+
+                                <span>
+                                    Exercício atual
+                                </span>
+
+                                <textarea
+                                    id="studentCurrentExercise"
+                                    rows="4"
+                                ></textarea>
+
+                            </label>
+
+                        </div>
+
+
+                        <!-- OBSERVAÇÕES -->
+
+                        <div class="student-form-section">
+
+                            <h4>
+                                Observações
+                            </h4>
+
+
+                            <label class="full-form-field">
+
+                                <span>
+                                    Observações privadas do professor
+                                </span>
+
+                                <textarea
+                                    id="studentNotes"
+                                    rows="6"
+                                ></textarea>
+
+                            </label>
+
+                        </div>
+
+
+                        <!-- DADOS IMPORTADOS -->
+
+                        <div class="student-form-section">
+
+                            <h4>
+                                Dados importados
+                            </h4>
+
+                            <p class="field-help">
+                                Campos adicionais encontrados no CSV original.
+                            </p>
+
+                            <div
+                                id="studentImportedFields"
+                                class="imported-fields"
+                            ></div>
+
+                        </div>
+
+
+                        <!-- AÇÕES -->
+
+                        <div class="student-editor-actions">
+
+                            <button
+                                type="button"
+                                id="studentSaveButton"
+                                class="database-primary-button"
+                                onclick="salvarFichaAluno()"
+                            >
+                                💾 Salvar ficha
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="database-button"
+                                onclick="fecharFichaAluno()"
+                            >
+                                Cancelar
+                            </button>
+
+                        </div>
+
+
+                        <p
+                            id="studentEditorMessage"
+                            class="database-message"
+                        ></p>
+
+                    </section>
+
+                </section>
+
+            </div>
+
         </section>
+
     </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script type="module" src="js/app.js?v=6"></script>
+
+    <!-- ==================================================
+         CSV
+    =================================================== -->
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"
+    ></script>
+
+
+    <!-- ==================================================
+         JAVASCRIPT PRINCIPAL
+    =================================================== -->
+
+    <script
+        type="module"
+        src="js/app.js?v=7"
+    ></script>
+
 </body>
+
 </html>
