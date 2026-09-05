@@ -80,3 +80,22 @@ button:active { transform:translateY(1px); }
 .save-student-button:disabled { opacity:.7; cursor:default; }
 @media (max-width:850px) { .student-row { align-items:flex-start; flex-direction:column; } .student-controls { width:100%; flex-wrap:wrap; } }
 @media (max-width:520px) { .management-paper { padding:25px 18px; } .section-heading { flex-direction:column; } .student-controls label { flex:1; } .student-controls select { width:100%; } .save-student-button { width:100%; } }
+
+/* ===== v6: cadastro pedagógico independente + importação CSV ===== */
+.student-toolbar { display:flex; gap:10px; flex-wrap:wrap; margin:24px 0 10px; }
+.toolbar-button { padding:10px 14px; background:var(--jade); color:white; border:1px solid #3c594d; border-radius:4px; }
+.toolbar-button:hover { background:#3d5c4e; }
+.csv-importer { margin:16px 0 24px; padding:20px; border:1px solid rgba(73,107,92,.24); border-radius:5px; background:rgba(73,107,92,.045); }
+.csv-importer-heading strong { font-family:Georgia,"Times New Roman",serif; font-size:1.1rem; font-weight:500; }
+.csv-importer-heading p { max-width:760px; margin-top:6px; color:var(--soft-ink); font-size:.86rem; line-height:1.55; }
+.csv-importer input[type="file"] { width:100%; margin-top:16px; padding:11px; background:#fffdf7; border:1px solid rgba(60,50,40,.2); border-radius:4px; }
+.csv-preview { margin-top:16px; }
+.csv-stats { display:flex; flex-wrap:wrap; gap:8px; }
+.csv-stats span { padding:6px 9px; border-radius:999px; background:rgba(73,107,92,.08); border:1px solid rgba(73,107,92,.18); color:var(--soft-ink); font-size:.78rem; }
+.csv-headers { margin-top:12px; color:var(--soft-ink); font-size:.8rem; line-height:1.55; }
+.csv-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:15px; }
+.student-account-badge { display:inline-flex; align-items:center; margin-top:7px; padding:4px 7px; border-radius:999px; font-size:.7rem; border:1px solid rgba(60,50,40,.16); }
+.student-account-badge.linked { color:var(--jade); background:rgba(73,107,92,.08); border-color:rgba(73,107,92,.22); }
+.student-account-badge.unlinked { color:var(--soft-ink); background:rgba(60,50,40,.04); }
+.student-meta { margin-top:4px; color:var(--soft-ink); font-size:.76rem; }
+@media (max-width:520px) { .csv-actions > button { width:100%; } }
