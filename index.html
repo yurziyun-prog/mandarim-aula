@@ -1,272 +1,114 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Mandarim Aula</title>
-
-    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/style.css?v=4">
 </head>
-
 <body>
-
     <div class="ink-mountain mountain-1"></div>
     <div class="ink-mountain mountain-2"></div>
 
-
-    <!-- =========================
-         TELA DE LOGIN
-    ========================== -->
-
     <main id="loginScreen" class="login-screen">
-
         <section class="login-card">
-
             <div class="seal">学</div>
-
             <div class="title-area">
-
-                <div class="chinese-title">
-                    中文
-                </div>
-
+                <div class="chinese-title">中文</div>
                 <h1>Mandarim Aula</h1>
-
-                <p>
-                    学习 · 练习 · 进步
-                </p>
-
+                <p>学习 · 练习 · 进步</p>
             </div>
-
-
-            <div class="divider">
-                <span>◆</span>
-            </div>
-
-
-            <form
-                class="login-form"
-                onsubmit="entrar(event)"
-            >
-
-                <label for="email">
-                    E-mail
-                </label>
-
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="seu@email.com"
-                    required
-                >
-
-
-                <label for="password">
-                    Senha
-                </label>
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Sua senha"
-                    required
-                >
-
-
-                <button
-                    type="submit"
-                    class="primary-button"
-                >
-                    Entrar
-                </button>
-
-
-                <button
-                    type="button"
-                    class="secondary-button"
-                    onclick="criarConta()"
-                >
-                    Criar conta
-                </button>
-
+            <div class="divider"><span>◆</span></div>
+            <form class="login-form" onsubmit="entrar(event)">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" placeholder="seu@email.com" required>
+                <label for="password">Senha</label>
+                <input type="password" id="password" placeholder="Sua senha" required>
+                <button type="submit" class="primary-button">Entrar</button>
+                <button type="button" class="secondary-button" onclick="criarConta()">Criar conta</button>
             </form>
-
-
-            <p
-                class="login-message"
-                id="loginMessage"
-            ></p>
-
-
-            <footer>
-                汉语学习平台
-            </footer>
-
+            <p class="login-message" id="loginMessage"></p>
+            <footer>汉语学习平台</footer>
         </section>
-
     </main>
 
-
-    <!-- =========================
-         SITE INTERNO
-    ========================== -->
-
-    <main
-        id="appScreen"
-        class="app-screen hidden"
-    >
-
-        <!-- CABEÇALHO -->
-
+    <main id="appScreen" class="app-screen hidden">
         <header class="app-header">
-
             <div class="app-brand">
-
-                <strong>
-                    中文 · Mandarim Aula
-                </strong>
-
+                <strong>中文 · Mandarim Aula</strong>
                 <div id="userInfo"></div>
-
             </div>
-
-
             <div class="header-actions">
-
-                <div
-                    id="moduleIndicator"
-                    class="module-indicator hidden"
-                >
+                <div id="moduleIndicator" class="module-indicator hidden">
                     <span>Módulo:</span>
                     <strong id="moduleName">Aluno</strong>
                 </div>
-
-
-                <button
-                    id="modeButton"
-                    class="mode-button hidden"
-                    onclick="alternarModo()"
-                >
-                    Trocar módulo
-                </button>
-
-
-                <button
-                    class="logout-button"
-                    onclick="sair()"
-                >
-                    Sair
-                </button>
-
+                <button id="modeButton" class="mode-button hidden" onclick="alternarModo()">Trocar módulo</button>
+                <button class="logout-button" onclick="sair()">Sair</button>
             </div>
-
         </header>
 
-
-        <!-- PAINEL -->
-
         <section class="dashboard">
+            <h1 id="welcomeTitle">Bem-vindo</h1>
+            <p id="modeDescription">Área do aluno</p>
 
-            <h1 id="welcomeTitle">
-                Bem-vindo
-            </h1>
-
-            <p id="modeDescription">
-                Área do aluno
-            </p>
-
-
-            <div class="dashboard-grid">
-
-                <!-- AULA DA SEMANA -->
-
-                <div class="dashboard-card">
-
-                    <div class="card-icon">
-                        🗂️
-                    </div>
-
-                    <h3>
-                        Aula da semana
-                    </h3>
-
-                    <p>
-                        Conteúdo atual e atividades.
-                    </p>
-
-                </div>
-
-
-                <!-- FLASHCARDS -->
-
-                <div class="dashboard-card">
-
-                    <div class="card-icon">
-                        🃏
-                    </div>
-
-                    <h3>
-                        Flashcards
-                    </h3>
-
-                    <p>
-                        Vocabulário e revisão.
-                    </p>
-
-                </div>
-
-
-                <!-- LEITURA -->
-
-                <div class="dashboard-card">
-
-                    <div class="card-icon">
-                        📖
-                    </div>
-
-                    <h3>
-                        Leitura
-                    </h3>
-
-                    <p>
-                        Leitura da semana.
-                    </p>
-
-                </div>
-
-
-                <!-- PROGRESSO -->
-
-                <div class="dashboard-card">
-
-                    <div class="card-icon">
-                        📊
-                    </div>
-
-                    <h3>
-                        Meu progresso
-                    </h3>
-
-                    <p>
-                        Desempenho e frequência.
-                    </p>
-
-                </div>
-
+            <div id="studentDashboard" class="dashboard-grid">
+                <button class="dashboard-card" type="button" onclick="abrirSecao('Aula da semana')">
+                    <span class="card-icon">🗂️</span><span class="card-title">Aula da semana</span>
+                    <span class="card-text">Conteúdo atual, tarefas e avisos da semana.</span>
+                </button>
+                <button class="dashboard-card" type="button" onclick="abrirSecao('Flashcards')">
+                    <span class="card-icon">🃏</span><span class="card-title">Flashcards</span>
+                    <span class="card-text">Vocabulário da semana e revisões anteriores.</span>
+                </button>
+                <button class="dashboard-card" type="button" onclick="abrirSecao('Leitura')">
+                    <span class="card-icon">📖</span><span class="card-title">Leitura</span>
+                    <span class="card-text">Leitura da semana e atividades de compreensão.</span>
+                </button>
+                <button class="dashboard-card" type="button" onclick="abrirSecao('Meu progresso')">
+                    <span class="card-icon">📊</span><span class="card-title">Meu progresso</span>
+                    <span class="card-text">Desempenho, frequência e evolução no mandarim.</span>
+                </button>
             </div>
 
-        </section>
+            <div id="teacherDashboard" class="dashboard-grid hidden">
+                <button class="dashboard-card" type="button" onclick="abrirSecao('Alunos')">
+                    <span class="card-icon">👥</span><span class="card-title">Alunos</span>
+                    <span class="card-text">Contas, níveis, perfis e acompanhamento individual.</span>
+                </button>
+                <button class="dashboard-card" type="button" onclick="abrirSecao('Planejamento de aulas')">
+                    <span class="card-icon">🗓️</span><span class="card-title">Planejamento de aulas</span>
+                    <span class="card-text">Organize aulas, conteúdos e tarefas semanais.</span>
+                </button>
+                <button class="dashboard-card" type="button" onclick="abrirSecao('Banco de conteúdo')">
+                    <span class="card-icon">🗃️</span><span class="card-title">Banco de conteúdo</span>
+                    <span class="card-text">Vocabulário, frases, flashcards, áudio e imagens.</span>
+                </button>
+                <button class="dashboard-card" type="button" onclick="abrirSecao('Avaliações')">
+                    <span class="card-icon">📝</span><span class="card-title">Avaliações</span>
+                    <span class="card-text">Registre avaliações e acompanhe capacidades em mandarim.</span>
+                </button>
+                <button class="dashboard-card" type="button" onclick="abrirSecao('Frequência e desempenho')">
+                    <span class="card-icon">📈</span><span class="card-title">Frequência e desempenho</span>
+                    <span class="card-text">Faltas, resultados e evolução dos alunos.</span>
+                </button>
+                <button class="dashboard-card" type="button" onclick="abrirSecao('Exercícios recebidos')">
+                    <span class="card-icon">📥</span><span class="card-title">Exercícios recebidos</span>
+                    <span class="card-text">Áudios, textos e outros exercícios enviados pelos alunos.</span>
+                </button>
+            </div>
 
+            <section id="sectionPlaceholder" class="section-placeholder hidden">
+                <button type="button" class="back-button" onclick="voltarAoPainel()">← Voltar ao painel</button>
+                <div class="placeholder-paper">
+                    <span class="placeholder-mark">文</span>
+                    <h2 id="sectionTitle">Seção</h2>
+                    <p>Esta área já está ligada à navegação. Vamos construir suas funções nas próximas etapas.</p>
+                </div>
+            </section>
+        </section>
     </main>
 
-
-    <script
-        type="module"
-        src="js/app.js?v=3"
-    ></script>
-
+    <script type="module" src="js/app.js?v=4"></script>
 </body>
-
 </html>
