@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mandarim Aula</title>
-    <link rel="stylesheet" href="css/style.css?v=4">
+    <link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body>
     <div class="ink-mountain mountain-1"></div>
@@ -100,15 +100,29 @@
 
             <section id="sectionPlaceholder" class="section-placeholder hidden">
                 <button type="button" class="back-button" onclick="voltarAoPainel()">← Voltar ao painel</button>
-                <div class="placeholder-paper">
+
+                <div id="genericSection" class="placeholder-paper">
                     <span class="placeholder-mark">文</span>
                     <h2 id="sectionTitle">Seção</h2>
                     <p>Esta área já está ligada à navegação. Vamos construir suas funções nas próximas etapas.</p>
+                </div>
+
+                <div id="studentsSection" class="management-paper hidden">
+                    <div class="section-heading">
+                        <div>
+                            <span class="placeholder-mark">生</span>
+                            <h2>Alunos</h2>
+                            <p>Gerencie nível HSK e acesso dos alunos cadastrados.</p>
+                        </div>
+                        <button type="button" class="refresh-button" onclick="carregarAlunos()">Atualizar lista</button>
+                    </div>
+                    <p id="studentsMessage" class="section-message"></p>
+                    <div id="studentsList" class="students-list"></div>
                 </div>
             </section>
         </section>
     </main>
 
-    <script type="module" src="js/app.js?v=4"></script>
+    <script type="module" src="js/app.js?v=5"></script>
 </body>
 </html>
