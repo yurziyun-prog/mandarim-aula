@@ -1,5 +1,301 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --paper: #f2eee3;
+    --paper-dark: #e5dfcf;
+    --ink: #27241f;
+    --soft-ink: #6d685e;
+    --red: #a3312b;
+    --red-dark: #7f241f;
+    --jade: #496b5c;
+}
+
 body {
-    background: #f3efe4;
-    color: #24201b;
-    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background:
+        linear-gradient(
+            rgba(242, 238, 227, 0.94),
+            rgba(242, 238, 227, 0.94)
+        ),
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 3px,
+            rgba(70, 60, 45, 0.025) 4px
+        );
+
+    color: var(--ink);
+    font-family:
+        "Noto Sans SC",
+        "Microsoft YaHei",
+        "PingFang SC",
+        Arial,
+        sans-serif;
+
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Montanhas abstratas em tinta */
+
+.ink-mountain {
+    position: fixed;
+    bottom: -130px;
+    width: 700px;
+    height: 400px;
+    background: rgba(45, 52, 45, 0.07);
+    transform: rotate(45deg);
+    border-radius: 35% 8% 40% 10%;
+    pointer-events: none;
+}
+
+.mountain-1 {
+    left: -230px;
+}
+
+.mountain-2 {
+    right: -300px;
+    bottom: -190px;
+    opacity: 0.65;
+}
+
+/* Tela */
+
+.login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Cartão */
+
+.login-card {
+    width: 100%;
+    max-width: 430px;
+    padding: 45px 42px 30px;
+
+    background: rgba(250, 247, 238, 0.88);
+
+    border: 1px solid rgba(65, 57, 46, 0.18);
+    border-radius: 4px;
+
+    box-shadow:
+        0 20px 60px rgba(48, 42, 33, 0.12),
+        0 2px 8px rgba(48, 42, 33, 0.08);
+
+    position: relative;
+}
+
+/* Selo */
+
+.seal {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--red);
+    color: #f7eee0;
+
+    font-family: serif;
+    font-size: 27px;
+
+    border: 2px solid var(--red-dark);
+    border-radius: 3px;
+
+    transform: rotate(2deg);
+}
+
+/* Título */
+
+.title-area {
+    text-align: center;
+}
+
+.chinese-title {
+    font-family:
+        "STKaiti",
+        "KaiTi",
+        serif;
+
+    font-size: 4rem;
+    line-height: 1;
+    letter-spacing: 5px;
+    margin-bottom: 13px;
+}
+
+.title-area h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    font-size: 1.8rem;
+    letter-spacing: 0.5px;
+}
+
+.title-area p {
+    margin-top: 10px;
+    color: var(--soft-ink);
+    letter-spacing: 5px;
+    font-size: 0.88rem;
+}
+
+/* Divisor */
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin: 28px 0;
+
+    color: var(--red);
+    font-size: 8px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(75, 66, 53, 0.25);
+}
+
+/* Formulário */
+
+.login-form label {
+    display: block;
+    margin-bottom: 7px;
+
+    color: var(--soft-ink);
+    font-size: 0.83rem;
+    font-weight: 600;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 13px 14px;
+
+    margin-bottom: 18px;
+
+    background: rgba(255, 253, 247, 0.8);
+
+    border: 1px solid rgba(70, 62, 50, 0.25);
+    border-radius: 3px;
+
+    color: var(--ink);
+    font-size: 1rem;
+
+    transition: 0.2s;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: var(--jade);
+
+    box-shadow:
+        0 0 0 2px rgba(73, 107, 92, 0.1);
+}
+
+/* Botões */
+
+button {
+    width: 100%;
+    padding: 13px;
+
+    border-radius: 3px;
+
+    font-size: 0.95rem;
+    cursor: pointer;
+
+    transition:
+        transform 0.15s,
+        background 0.15s;
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+.primary-button {
+    margin-top: 4px;
+
+    background: var(--jade);
+    color: #fff;
+
+    border: 1px solid #3d5c4f;
+}
+
+.primary-button:hover {
+    background: #3e5e50;
+}
+
+.secondary-button {
+    margin-top: 10px;
+
+    background: transparent;
+    color: var(--red);
+
+    border: 1px solid rgba(163, 49, 43, 0.45);
+}
+
+.secondary-button:hover {
+    background: rgba(163, 49, 43, 0.05);
+}
+
+/* Mensagens */
+
+.login-message {
+    min-height: 22px;
+
+    margin-top: 16px;
+
+    text-align: center;
+    color: var(--red);
+
+    font-size: 0.85rem;
+}
+
+/* Rodapé */
+
+footer {
+    margin-top: 17px;
+
+    text-align: center;
+
+    color: rgba(75, 68, 58, 0.48);
+
+    font-size: 0.78rem;
+    letter-spacing: 4px;
+}
+
+/* Celular */
+
+@media (max-width: 520px) {
+
+    .login-card {
+        padding: 40px 25px 25px;
+    }
+
+    .chinese-title {
+        font-size: 3.4rem;
+    }
+
+    .seal {
+        width: 39px;
+        height: 39px;
+        font-size: 23px;
+    }
 }
